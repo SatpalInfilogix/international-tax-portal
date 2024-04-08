@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
-                    <form action="{{ route('news-and-events.store') }}" method="post"  enctype="multipart/form-data">
+                    <form action="{{ route('news-and-events.store') }}" method="post" name="newsandevents" class="bg-white shadow" enctype="multipart/form-data">
                         @csrf
                     <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <div class="pb-3">
@@ -52,4 +52,30 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(function() {
+            $("form[name='newsandevents']").validate({
+                rules: {
+                    title: "required",
+                   image:  "required",
+                },
+                messages: {
+                    title: "Title field is required.",
+                    image: "Image field is required"
+                },
+                highlight: function(element) {
+                    $(element).removeClass('focus:border-green-500 focus:ring-green-500')
+                    $(element).addClass('focus:border-red-500 focus:ring-red-500')
+                },
+                unhighlight: function(element) {
+                    $(element).removeClass('focus:border-red-500 focus:ring-red-500')
+                    $(element).addClass('focus:border-green-500 focus:ring-green-500')
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
 </x-app-layout>
