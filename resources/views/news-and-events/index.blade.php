@@ -12,7 +12,7 @@
             </a>
         </div>
 
-        <x-success-message :value="__('message')" />
+        <x-success-message :message="session('success-message')" />
 
         <div class="flex justify-end mt-4">
             <a href="https://us02web.zoom.us/j/82104922098?pwd=UitWeWhHSER1dTZhRVZ3ejZRZ1dyQT09#success" target="_blank"

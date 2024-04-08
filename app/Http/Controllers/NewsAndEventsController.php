@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\NewsAndEvents;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class NewsAndEventsController extends Controller
 {
@@ -37,17 +38,17 @@ class NewsAndEventsController extends Controller
         {
            $file = $request->file('image');
            $filename = time().'.'.$file->getClientOriginalExtension();
-           $file->move(public_path('images/news-and-events/'), $filename);
+           $file->move(public_path('uploads/news-and-events/'), $filename);
         }
 
         $newsAndEvents = NewsAndEvents::create([
             'title' => $request->title,
-            'image' => 'images/news-and-events/'.$filename,
+            'image' => 'uploads/news-and-events/'.$filename,
             'url'   => $request->url,
             'text'  => $request->text
         ]);
 
-        return redirect()->route("news-and-events.index")->with('message','News And Events Created Successfully.');
+        return Redirect::route("news-and-events.index")->with('success-message','News And Events Created Successfully.');
     }
 
     /**
