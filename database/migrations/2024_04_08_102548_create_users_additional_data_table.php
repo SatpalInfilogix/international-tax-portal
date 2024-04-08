@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_additional_data', function (Blueprint $table) {
+        Schema::create('users_additional_data', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->foreignId('user_id')->constrained();
             $table->integer('country_id');
             $table->enum('company_size', ['Small', 'Medium', 'Large'])->default('Small');
             $table->string('company_name', 100)->nullable();
