@@ -12,7 +12,12 @@ class NewsAndEventsController extends Controller
      */
     public function index()
     {
-        return view('news-and-events.index');
+        $newsAndEvents = NewsAndEvents::latest()->get();
+        foreach ($newsAndEvents as $key => $value) {
+            $value['date'] = $value->created_at->format('d M,Y');
+        }
+
+        return view('news-and-events.index', compact('newsAndEvents'));
     }
 
     /**
@@ -32,17 +37,17 @@ class NewsAndEventsController extends Controller
         {
            $file = $request->file('image');
            $filename = time().'.'.$file->getClientOriginalExtension();
-           $file->move(public_path('images'), $filename);
+           $file->move(public_path('images/news-and-events/'), $filename);
         }
 
         $newsAndEvents = NewsAndEvents::create([
             'title' => $request->title,
-            'image' => 'images/'.$filename,
+            'image' => 'images/news-and-events/'.$filename,
             'url'   => $request->url,
             'text'  => $request->text
         ]);
 
-        return redirect()->back()->with('success', 'News And Events save successfully');
+        return redirect()->route("news-and-events.index")->with('message','News And Events Created Successfully.');
     }
 
     /**
