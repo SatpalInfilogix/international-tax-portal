@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone_number', 15)->nullable();
-            $table->enum('role', ['Admin', 'Fusion', 'Member'])->default('Fusion');
+            $table->enum('user_type', ['Fusion', 'Member'])->default('Fusion');
             $table->string('areas_of_expertise')->nullable();
             $table->string('facebook_link')->nullable();
             $table->string('linkedin_link')->nullable();
             $table->string('twitter_link')->nullable();
-            $table->enum('user_status', ['Active', 'Inactive'])->default('Active');
+            $table->enum('user_status', ['Active', 'Deactive'])->default('Active');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
