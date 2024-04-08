@@ -28,7 +28,21 @@ class NewsAndEventsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->hasFile('image'))
+        {
+           $file = $request->file('image');
+           $filename = time().'.'.$file->getClientOriginalExtension();
+           $file->move(public_path('images'), $filename);
+        }
+
+        $newsAndEvents = NewsAndEvents::create([
+            'title' => $request->title,
+            'image' => 'images/'.$filename,
+            'url'   => $request->url,
+            'text'  => $request->text
+        ]);
+
+        return redirect()->back()->with('success', 'News And Events save successfully');
     }
 
     /**
