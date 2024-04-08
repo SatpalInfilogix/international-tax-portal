@@ -3,8 +3,10 @@
 <div class="mb-2">
     <x-input-label for="country" :value="__('Country')" />
     <select id="country" class= "border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
-        <option value="">Select Country</option>
-        <option value="US">United States</option>
+        <option value="" selected disabled>Select Country</option>
+        @foreach ($countries as $country)
+        <option value="{{ $country->name }}">{{ $country->name }}</option>
+        @endforeach
     </select>
 </div>
 

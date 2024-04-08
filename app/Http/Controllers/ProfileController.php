@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Country;
 
 class ProfileController extends Controller
 {
@@ -20,6 +21,7 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+            'countries' => Country::get(),
         ]);
     }
 
