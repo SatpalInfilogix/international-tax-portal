@@ -29,51 +29,61 @@
     {{ __('Areas of Expertise') }}
 </h2>
 
+@php
+    $services = explode(", ", $user->areas_of_expertise);
+@endphp
+
 <div class="grid grid-cols-3 gap-2 mb-9">
     <div>
         <label for="income_tax" class="inline-flex items-center">
-            <input id="income_tax" type="checkbox" mn
-                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
+            <input id="income_tax" type="checkbox" name="services[]" value="Income Tax"
+                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500"
+                @checked(in_array("Income Tax", $services))>
             <span class="ms-2 text-sm text-gray-600">{{ __('Income Tax') }}</span>
         </label>
     </div>
 
     <div>
         <label for="ct" class="inline-flex items-center">
-            <input id="ct" type="checkbox"
-                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
+            <input id="ct" type="checkbox" name="services[]" value="CT"
+                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500"
+                @checked(in_array("CT", $services))>
             <span class="ms-2 text-sm text-gray-600">{{ __('CT') }}</span>
         </label>
     </div>
 
     <div>
         <label for="indirect_tax" class="inline-flex items-center">
-            <input id="indirect_tax" type="checkbox"
-                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
+            <input id="indirect_tax" type="checkbox" name="services[]" value="Indirect Tax"
+                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500"
+                @checked(in_array("Indirect Tax", $services))>
             <span class="ms-2 text-sm text-gray-600">{{ __('Indirect Tax') }}</span>
         </label>
     </div>
 
     <div>
         <label for="private_client" class="inline-flex items-center">
-            <input id="private_client" type="checkbox"
-                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
+            <input id="private_client" type="checkbox" name="services[]" value="Private Client"
+                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500"
+                @checked(in_array("Private Client", $services))>
             <span class="ms-2 text-sm text-gray-600">{{ __('Private Client') }}</span>
         </label>
     </div>
 
     <div>
         <label for="estate_tax" class="inline-flex items-center">
-            <input id="estate_tax" type="checkbox"
-                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
+            <input id="estate_tax" type="checkbox" name="services[]" value="Estate Tax"
+                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500"
+                @checked(in_array("Estate Tax", $services))>
             <span class="ms-2 text-sm text-gray-600">{{ __('Estate Tax') }}</span>
         </label>
     </div>
 
     <div>
         <label for="bespoke_advice" class="inline-flex items-center">
-            <input id="bespoke_advice" type="checkbox"
-                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
+            <input id="bespoke_advice" type="checkbox" name="services[]" value="Bespoke Advice"
+                class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500"
+                @checked(in_array("Bespoke Advice", $services))>
             <span class="ms-2 text-sm text-gray-600">{{ __('Bespoke Advice') }}</span>
         </label>
     </div>
