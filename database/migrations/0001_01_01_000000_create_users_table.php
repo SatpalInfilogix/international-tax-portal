@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('phone_number', 15)->nullable()->after('email');
-            $table->tinyInteger('role')->default('2');
+            $table->string('phone_number', 15)->nullable();
+            $table->enum('role', ['Admin', 'Fusion', 'Member'])->default('Fusion');
             $table->string('areas_of_expertise')->nullable();
             $table->string('facebook_link')->nullable();
             $table->string('linkedin_link')->nullable();
             $table->string('twitter_link')->nullable();
             $table->enum('user_status', ['Active', 'Inactive'])->default('Active');
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
