@@ -3,32 +3,26 @@
 <div class="mb-2">
     <x-input-label for="name" :value="__('Name')" />
     <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" />
-    <x-input-error class="mt-2" :messages="$errors->get('name')" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="email" :value="__('Email')" />
     <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" />
-    <x-input-error class="mt-2" :messages="$errors->get('email')" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="phone_number" :value="__('Telephone')" />
-    <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" :value="old('phone_number', $user->phone_number)" />
-    <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+    <x-text-input id="phone_number" name="phone_number" type="number" class="mt-1 block w-full" :value="old('phone_number', $user->phone_number)" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="new_password" :value="__('New Password')" />
-    <x-text-input id="new_password" name="new_password" type="text" class="mt-1 block w-full" :value="old('phone_number', $user->phone_number)" />
-    <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+    <x-text-input id="new_password" name="new_password" type="password" class="mt-1 block w-full" />
 </div>
 
 <div class="mb-9">
     <x-input-label for="repeat_password" :value="__('Repeat Password')" />
-    <x-text-input id="repeat_password" name="repeat_password" type="text" class="mt-1 block w-full"
-        :value="old('phone_number', $user->phone_number)" />
-    <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+    <x-text-input id="repeat_password" name="repeat_password" type="password" class="mt-1 block w-full" />
 </div>
 
 <h2 class="text-lg font-medium text-gray-900 mb-4">
@@ -94,17 +88,14 @@
 <div class="mb-2">
     <x-input-label for="linkedin_link" :value="__('LinkedIn')" />
     <x-text-input id="linkedin_link" name="linkedin_link" type="text" class="mt-1 block w-full" :value="old('linkedin_link', $user->linkedin_link)" />
-    <x-input-error class="mt-2" :messages="$errors->get('linkedin_link')" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="facebook_link" :value="__('Facebook')" />
     <x-text-input id="facebook_link" name="facebook_link" type="text" class="mt-1 block w-full" :value="old('facebook_link', $user->facebook_link)" />
-    <x-input-error class="mt-2" :messages="$errors->get('facebook_link')" />
 </div>
 
 <div>
     <x-input-label for="twitter_link" :value="__('Twitter')" />
     <x-text-input id="twitter_link" name="twitter_link" type="text" class="mt-1 block w-full" :value="old('twitter_link', $user->twitter_link)" />
-    <x-input-error class="mt-2" :messages="$errors->get('twitter_link')" />
 </div>

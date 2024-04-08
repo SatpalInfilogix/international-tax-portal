@@ -13,6 +13,8 @@
             </div>
 
             <form name="update-profile" action="{{ route('profile.update') }}" method="POST" class="bg-white shadow">
+                @csrf
+                @method('patch')
                 <div class="grid grid-cols-2">
                     <div class="p-4 pb-0 sm:p-8 sm:pb-0">
                         @include('profile.individual-form')
@@ -46,30 +48,29 @@
                     },
                     phone_number: {
                         required: true,
-                    },
-                    password: {
-                        required: true,
-                        minlength: 5
+                        minlength: 10,
+                        maxlength: 10
                     }
                 },
                 messages: {
-                    firstname: "Please enter your firstname",
-                    lastname: "Please enter your lastname",
-                    password: {
-                        required: "Please provide a password",
-                        minlength: "Your password must be at least 5 characters long"
+                    name: "Please enter your name",
+                    email: {
+                        required: "Please enter an email address",
+                        email: "Please enter valid email address"
                     },
-                    email: "Please enter a valid email address"
+                    phone_number: {
+                        required: "Please enter a phasassaone number",
+                        minlength: "Please enter valid min phone number",
+                        maxlength: "Please enter valid phone number"
+                    },
                 },
                 highlight: function(element) {
                     $(element).removeClass('focus:border-green-500 focus:ring-green-500')
                     $(element).addClass('focus:border-red-500 focus:ring-red-500')
-                    $(element).parent().find('.error').addClass('text-red-600')
                 },
                 unhighlight: function(element) {
                     $(element).removeClass('focus:border-red-500 focus:ring-red-500')
                     $(element).addClass('focus:border-green-500 focus:ring-green-500')
-                    $(element).parent().find('.error').removeClass('text-red-600')
                 },
                 submitHandler: function(form) {
                     form.submit();
