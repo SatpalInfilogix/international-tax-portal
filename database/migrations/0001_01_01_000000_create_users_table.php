@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('facebook_link')->nullable();
             $table->string('linkedin_link')->nullable();
             $table->string('twitter_link')->nullable();
-            $table->enum('user_status', ['Active', 'Inactive'])->default('Active');
+            $table->enum('user_status', ['Active', 'Deactive'])->default('Active');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

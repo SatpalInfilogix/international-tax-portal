@@ -40,6 +40,9 @@ class ProfileController extends Controller
         $user->facebook_link = $request->facebook_link;
         $user->linkedin_link = $request->linkedin_link;
         $user->twitter_link = $request->twitter_link;
+
+        $user->user_type = $request->user_type;
+        $user->user_status = $request->user_status;
         $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');

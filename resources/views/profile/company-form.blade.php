@@ -65,18 +65,18 @@
 </div>
 
 <div class="mb-2">
-    <x-input-label for="company_status" :value="__('Status')" />
-    <select id="company_status" class= "border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
-        <option value="Active">Active</option>
-        <option value="Deactive">Deactive</option>
+    <x-input-label for="user_status" :value="__('Status')" />
+    <select id="user_status" name="user_status" class= "border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
+        <option value="Active" @selected($user->user_status== 'Active')>Active</option>
+        <option value="Deactive" @selected($user->user_status == 'Deactive')>Deactive</option>
     </select>
 </div>
 
 <div class="mb-2">
     <x-input-label for="user_type" :value="__('User Type')" />
-    <select id="user_type" class= "border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
-        <option value="Fusion">Fusion</option>
-        <option value="Member">Member</option>
+    <select id="user_type" name="user_type" class= "border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
+        <option value="Fusion" @selected($user->user_type == 'Fusion')>Fusion</option>
+        <option value="Member" @selected($user->user_type == 'Member')>Member</option>
     </select>
 </div>
 
