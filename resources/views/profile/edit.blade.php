@@ -12,6 +12,11 @@
                 </a>
             </div>
 
+            @if (session('status') === 'profile-updated')
+                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 7000)"
+                    class="text-sm text-gray-600">{{ __('Saved.') }}</p>
+            @endif
+
             <form name="update-profile" action="{{ route('profile.update') }}" method="POST" class="bg-white shadow">
                 @csrf
                 @method('patch')
@@ -27,11 +32,6 @@
                 <div class="flex items-center gap-4 p-4 sm:p-8">
                     <x-primary-button>{{ __('Save') }}</x-primary-button>
                     <x-secondary-button>{{ __('Reset') }}</x-secondary-button>
-
-                    @if (session('status') === 'profile-updated')
-                        <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                            class="text-sm text-gray-600">{{ __('Saved.') }}</p>
-                    @endif
                 </div>
             </form>
         </div>
