@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -24,17 +26,21 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {   
-        print_r($request->all());
-        die();
-        $request->user()->fill($request->validated());
+        $user = User::find(Auth::id());
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if($request->new_password && $request->repeat_password && $request->new_password==$request->repeat_password){
+            $user->password = Hash::make($request->new_password);
         }
-
-        $request->user()->save();
+        
+        $user->facebook_link = $request->facebook_link;
+        $user->linkedin_link = $request->linkedin_link;
+        $user->twitter_link = $request->twitter_link;
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

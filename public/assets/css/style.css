@@ -12,6 +12,10 @@
     height: max-content;
 }
 
+.error{
+    color: rgb(220 38 38);
+}
+
 
 /* Data table customization */
 table.dataTable thead th, table.dataTable thead td, table.dataTable.no-footer{

@@ -21,43 +21,37 @@
 <div class="mb-2">
     <x-input-label for="company_name" :value="__('Company')" />
     <x-text-input id="company_name" name="company_name" type="text" class="mt-1 block w-full"
-        :value="old('phone_number', $user->phone_number)" />
-    <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        :value="old('company_name', $user->phone_number)" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_address" :value="__('Address')" />
-    <x-text-input id="company_address" name="phone_number" type="text" class="mt-1 block w-full"
-        :value="old('phone_number', $user->phone_number)" />
-    <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+    <x-text-input id="company_address" name="company_address" type="text" class="mt-1 block w-full"
+        :value="old('company_address', $user->phone_number)" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_phone_number" :value="__('Telephone')" />
     <x-text-input id="company_phone_number" name="company_phone_number" type="text" class="mt-1 block w-full"
-        :value="old('phone_number', $user->phone_number)" />
-    <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        :value="old('company_phone_number', $user->phone_number)" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_description" :value="__('Description')" />
     <x-text-input id="company_description" name="company_description" type="text" class="mt-1 block w-full"
-        :value="old('phone_number', $user->phone_number)" />
-    <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        :value="old('company_description', $user->phone_number)" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_year_established" :value="__('Year Established')" />
     <x-text-input id="company_year_established" name="company_year_established" type="text" class="mt-1 block w-full"
-        :value="old('phone_number', $user->phone_number)" />
-    <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        :value="old('company_year_established', $user->phone_number)" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_website" :value="__('Website')" />
     <x-text-input id="company_website" name="company_website" type="text" class="mt-1 block w-full"
-        :value="old('phone_number', $user->phone_number)" />
-    <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        :value="old('company_website', $user->phone_number)" />
 </div>
 
 <div class="mb-2">
@@ -89,6 +83,5 @@
 <div>
     <x-input-label for="company_bio" :value="__('Bio')" />
     <x-text-area id="company_bio" name="company_bio" type="text" class="mt-1 block w-full"
-        :value="old('phone_number', $user->phone_number)" />
-    <x-input-error class="mt-2" :messages="$errors->get('phone_number')" />
+        :value="old('company_bio', $user->phone_number)" />
 </div>
