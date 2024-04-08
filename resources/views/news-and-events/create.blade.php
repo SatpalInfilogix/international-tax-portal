@@ -15,10 +15,12 @@
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
+                    <form action="{{ route('news-and-events.store') }}" method="post"  enctype="multipart/form-data">
+                        @csrf
                     <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <div class="pb-3">
                             <x-input-label for="title" :value="__('Title')" />
-                            <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" required
+                            <x-text-input id="title" name="title" type="text" class="mt-1 block w-full"
                                 autofocus />
                         </div>
 
@@ -29,12 +31,12 @@
 
                         <div class="pb-3">
                             <x-input-label for="name" :value="__('Url')" />
-                            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" />
+                            <x-text-input id="name" name="url" type="text" class="mt-1 block w-full" />
                         </div>
 
                         <div class="pb-3">
                             <x-input-label for="name" :value="__('Text')" />
-                            <x-text-area id="name" name="name" type="text" class="mt-1 block w-full" required
+                            <x-text-area id="name" name="text" type="text" class="mt-1 block w-full"
                                 autofocus />
                         </div>
 
@@ -44,7 +46,7 @@
                             </x-primary-button>
                         </div>
                     </div>
-
+                    </form>
 
                 </div>
             </div>
