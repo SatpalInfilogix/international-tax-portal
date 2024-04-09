@@ -29,42 +29,27 @@
         <div class="py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
             @foreach ($newsAndEvents as $key => $newsAndEvent)
             <div class="col-span-1 lg:col-span-1 bg-white shadow-md">
+                <div class="relative">
                 <img class="w-full"
                     src="{{URL::asset($newsAndEvent->image)}}"
-                    alt="Sunset in the mountains">
+                    alt="{{ ucwords($newsAndEvent->title) }}">
+
+                    <div class="absolute top-2 right-2">
+                        <a href="{{ route('news-and-events.update', $newsAndEvent->id) }}" class="bg-green-500 text-white hover:bg-green-600 py-1 px-2 rounded-full mr-1 text-md">
+                            <i class="ri-pencil-line"></i>
+                        </a>
+                        <button class="bg-green-500 text-white hover:bg-green-600 py-1 px-2 rounded-full text-md">
+                            <i class="ri-close-fill"></i>
+                        </button>
+                    </div>
+                </div>
+                
                 <div class="px-4 py-4">
-                   
                     <div class="font-bold text-md mb-2">{{ ucwords($newsAndEvent->title) }}</div>
                     <p class="text-gray-700 text-sm">{{ Str::limit($newsAndEvent->text, 100) }}</p>
                     <p class="text-sm text-right text-gray-500 italic">{{ $newsAndEvent->date }}</p>
                 </div>
             </div>
-            <!-- <div class="col-span-1 lg:col-span-1 bg-white shadow-md">
-                <img class="w-full"
-                    src="https://infilogix.com/portal/uploads/news_events/dance9836341_09f1b11e-811f-11e8-bd7f-aad8d1b78451.jpg"
-                    alt="Sunset in the mountains">
-                <div class="px-4 py-4">
-                    <div class="font-bold text-md mb-2">Lorem Ipsum</div>
-                    <p class="text-gray-700 text-sm">In publishing and graphic design, Lorem ipsum is a placeholder text
-                        commonly used to demonstrate the visual form of a document or a typeface without relying on
-                        meaningful content.
-                    </p>
-                    <p class="text-sm text-right text-gray-500 italic">02 Apr, 2024</p>
-                </div>
-            </div>
-            <div class="col-span-1 lg:col-span-1 bg-white shadow-md">
-                <img class="w-full"
-                    src="https://infilogix.com/portal/uploads/news_events/dance9836341_09f1b11e-811f-11e8-bd7f-aad8d1b78451.jpg"
-                    alt="Sunset in the mountains">
-                <div class="px-4 py-4">
-                    <div class="font-bold text-md mb-2">Lorem Ipsum</div>
-                    <p class="text-gray-700 text-sm">In publishing and graphic design, Lorem ipsum is a placeholder text
-                        commonly used to demonstrate the visual form of a document or a typeface without relying on
-                        meaningful content.
-                    </p>
-                    <p class="text-sm text-right text-gray-500 italic">02 Apr, 2024</p>
-                </div>
-            </div> -->
             @endforeach
         </div>
         @else
