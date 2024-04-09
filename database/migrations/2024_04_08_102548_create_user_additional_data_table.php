@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('user_additional_data', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('country_id');
+            $table->string('country', 100);
             $table->enum('company_size', ['Small', 'Medium', 'Large'])->default('Small');
             $table->string('company_name', 100)->nullable();
             $table->string('company_address', 100)->nullable();
             $table->string('company_phone_number', 100)->nullable();
             $table->string('company_description')->nullable();
-            $table->string('company_year_established')->nullable();
+            $table->string('company_year_established', 100)->nullable();
             $table->string('company_website')->nullable();
             $table->string('company_logo')->nullable();
             $table->string('headshot_path')->nullable();
