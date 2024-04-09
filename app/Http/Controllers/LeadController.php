@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lead;
 use Illuminate\Http\Request;
+use App\Models\Country;
 
 class LeadController extends Controller
 {
@@ -20,7 +21,9 @@ class LeadController extends Controller
      */
     public function create()
     {
-        return view('leads.create');
+        return view('leads.create', [
+            'countries' => Country::get()
+        ]);
     }
 
     /**
@@ -28,7 +31,7 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        print_r($request->all());
     }
 
     /**

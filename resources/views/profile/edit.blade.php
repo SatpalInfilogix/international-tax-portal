@@ -56,8 +56,8 @@
                         email: "Please enter valid email address"
                     },
                     phone_number: {
-                        required: "Please enter a phasassaone number",
-                        minlength: "Please enter valid min phone number",
+                        required: "Please enter a phone number",
+                        minlength: "Please enter valid phone number",
                         maxlength: "Please enter valid phone number"
                     },
                 },
