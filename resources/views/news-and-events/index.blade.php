@@ -35,7 +35,7 @@
                     alt="{{ ucwords($newsAndEvent->title) }}">
 
                     <div class="absolute top-2 right-2">
-                        <a href="{{ route('news-and-events.update', $newsAndEvent->id) }}" class="bg-green-500 text-white hover:bg-green-600 py-1 px-2 rounded-full mr-1 text-md">
+                        <a href="{{ route('news-and-events.edit', $newsAndEvent->id) }}" class="bg-green-500 text-white hover:bg-green-600 py-1 px-2 rounded-full mr-1 text-md">
                             <i class="ri-pencil-line"></i>
                         </a>
                         <button class="bg-green-500 text-white hover:bg-green-600 py-1 px-2 rounded-full text-md">
