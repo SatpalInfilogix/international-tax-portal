@@ -22,37 +22,37 @@
 <div class="mb-2">
     <x-input-label for="company_name" :value="__('Company')" />
     <x-text-input id="company_name" name="company_name" type="text" class="mt-1 block w-full"
-        :value="old('company_name', $userAdditionalData && $userAdditionalData->company_name)" />
+        :value="old('company_name', $userAdditionalData->company_name ?? '')" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_address" :value="__('Address')" />
     <x-text-input id="company_address" name="company_address" type="text" class="mt-1 block w-full"
-        :value="old('company_address', $userAdditionalData && $userAdditionalData->company_address)" />
+        :value="old('company_address', $userAdditionalData->company_address ?? '')" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_phone_number" :value="__('Telephone')" />
     <x-text-input id="company_phone_number" name="company_phone_number" type="text" class="mt-1 block w-full"
-        :value="old('company_phone_number', $userAdditionalData && $userAdditionalData->company_phone_number)" />
+        :value="old('company_phone_number', $userAdditionalData->company_phone_number ?? '')" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_description" :value="__('Description')" />
     <x-text-input id="company_description" name="company_description" type="text" class="mt-1 block w-full"
-        :value="old('company_description', $userAdditionalData && $userAdditionalData->phone_number)" />
+        :value="old('company_description', $userAdditionalData->company_description ?? '')" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_year_established" :value="__('Year Established')" />
     <x-text-input id="company_year_established" name="company_year_established" type="text" class="mt-1 block w-full"
-        :value="old('company_year_established', $userAdditionalData && $userAdditionalData->phone_number)" />
+        :value="old('company_year_established', $userAdditionalData->company_year_established ?? '')" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_website" :value="__('Website')" />
     <x-text-input id="company_website" name="company_website" type="text" class="mt-1 block w-full"
-        :value="old('company_website', $userAdditionalData && $userAdditionalData->phone_number)" />
+        :value="old('company_website', $userAdditionalData->company_website ?? '')" />
 </div>
 
 <div class="mb-2">
@@ -84,5 +84,5 @@
 <div>
     <x-input-label for="company_bio" :value="__('Bio')" />
     <x-text-area id="company_bio" name="company_bio" type="text" class="mt-1 block w-full"
-        :value="old('company_bio', $userAdditionalData && $userAdditionalData->bio)" />
+        :value="old('company_bio', $userAdditionalData->bio ?? '')" />
 </div>

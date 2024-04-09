@@ -57,9 +57,13 @@ class ProfileController extends Controller
         $user->user_status = $request->user_status;
         $user->save();
 
+        $oldLogo = NULL;
+        $oldHeadshotFile = NULL;
         $userAdditionalData = UserAdditionalData::where('user_id', Auth::id())->first();
-        $oldLogo = $userAdditionalData->company_logo;
-        $oldHeadshotFile = $userAdditionalData->headshot_path;
+        if($userAdditionalData != '') {
+            $oldLogo = $userAdditionalData->company_logo;
+            $oldHeadshotFile = $userAdditionalData->headshot_path;
+        }
         if ($request->hasFile('logo_upload'))
         {
             $logoFile = $request->file('logo_upload');
@@ -85,8 +89,8 @@ class ProfileController extends Controller
                 'company_description'      => $request->company_description,
                 'company_year_established' => $request->company_year_established,
                 'company_website'          => $request->company_website,
-                'company_logo'             => isset($fileName) ? 'images/company_logo/'. $filename : $oldLogo,
-                'headshot_path'            => isset($headshotFilename) ? 'images/headshot_upload/'. $headshotFilename : $oldHeadshotFile,
+                'company_logo'             => isset($filename) ? 'uploads/company_logo/'. $filename : $oldLogo,
+                'headshot_path'            => isset($headshotFilename) ? 'uploads/headshot_upload/'. $headshotFilename : $oldHeadshotFile,
                 'bio'                      => $request->company_bio,
             ]);
 
