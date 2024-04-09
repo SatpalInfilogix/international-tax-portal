@@ -14,7 +14,7 @@
 
             <x-success-message :message="session('success-message')" />
 
-            <form name="update-profile" action="{{ route('profile.update') }}" method="POST" class="bg-white shadow">
+            <form name="update-profile" action="{{ route('profile.update') }}" method="POST" class="bg-white shadow" enctype="multipart/form-data">
                 @csrf
                 @method('patch')
                 <div class="grid grid-cols-2">

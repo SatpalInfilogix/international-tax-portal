@@ -55,6 +55,39 @@ class ProfileController extends Controller
         $user->user_status = $request->user_status;
         $user->save();
 
+        $userAdditionalData = UserAdditionalData::where('user_id', Auth::id())->first();
+        $oldLogo = $userAdditionalData->company_logo;
+        $oldHeadshotFile = $userAdditionalData->headshot_path;
+        if ($request->hasFile('logo_upload'))
+        {
+            $logoFile = $request->file('logo_upload');
+            $filename = time().'.'.$logoFile->getClientOriginalExtension();
+            $logoFile->move(public_path('uploads/company-logo/'), $filename);
+        }
+
+        if ($request->hasFile('headshot_upload'))
+        {
+           $headshotFile = $request->file('headshot_upload');
+           $headshotFilename = time().'.'.$headshotFile->getClientOriginalExtension();
+           $headshotFile->move(public_path('uploads/headshots/'), $headshotFilename);
+        }
+
+        UserAdditionalData::updateOrCreate([
+                'user_id'                  => Auth::id(),
+            ],[
+                'country'                  => $request->country,
+                'company_size'             => $request->company_size,
+                'company_name'             => $request->company_name,
+                'company_address'          => $request->company_address,
+                'company_phone_number'     => $request->company_phone_number,
+                'company_description'      => $request->company_description,
+                'company_year_established' => $request->company_year_established,
+                'company_website'          => $request->company_website,
+                'company_logo'             => isset($fileName) ? 'images/company_logo/'. $filename : $oldLogo,
+                'headshot_path'            => isset($headshotFilename) ? 'images/headshot_upload/'. $headshotFilename : $oldHeadshotFile,
+                'bio'                      => $request->company_bio,
+            ]);
+
         return Redirect::route('profile.edit')->with('success-message', 'Profile has been succesfully updated');
     }
 
