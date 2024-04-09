@@ -15,6 +15,9 @@
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
+                    <form action="{{ route('resources.store') }}" method="post" name="resource"
+                            class="bg-white shadow" enctype="multipart/form-data">
+                        @csrf
                     <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <div class="mb-3">
                             <x-input-label for="title" :value="__('Title')" />
@@ -38,7 +41,7 @@
 
                         <div class="mb-3">
                             <x-input-label for="name" :value="__('Rich text')" />
-                            <x-text-area id="name" name="name" type="text" class="mt-1 block w-full" />
+                            <x-text-area id="name" name="rich_text" type="text" class="mt-1 block w-full" />
                         </div>
 
                         <div class="buttons-container mt-4">
@@ -47,8 +50,36 @@
                             </x-primary-button>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        $(function() {
+            $("form[name='resource']").validate({
+                rules: {
+                    title: "required",
+                    image: "required",
+                },
+                messages: {
+                    title: "Title field is required.",
+                    image: "Image field is required"
+                },
+                highlight: function(element) {
+                    $(element).removeClass('border-gray-300 focus:border-green-500 focus:ring-green-500')
+                    $(element).addClass('border-red-600 focus:border-red-500 focus:ring-red-500')
+                },
+                unhighlight: function(element) {
+                    $(element).removeClass(
+                        'border-gray-300 border-red-600 focus:border-red-500 focus:ring-red-500')
+                    $(element).addClass('border-green-600 focus:border-green-500 focus:ring-green-500')
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
 </x-app-layout>

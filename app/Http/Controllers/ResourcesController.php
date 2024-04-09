@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Resource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class ResourcesController extends Controller
 {
@@ -12,7 +13,12 @@ class ResourcesController extends Controller
      */
     public function index()
     {
-        return view('resources.index');
+        $resources = Resource::latest()->get();
+        foreach ($resources as $key => $value) {
+            $value['date'] = $value->created_at->format('d M,Y');
+        }
+
+        return view('resources.index', compact('resources'));
     }
 
     /**
@@ -28,7 +34,31 @@ class ResourcesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->hasFile('image'))
+        {
+           $file = $request->file('image');
+           $filename = time().'.'.$file->getClientOriginalExtension();
+           $file->move(public_path('uploads/resources/'), $filename);
+        }
+
+        $pdfFilename = NULL;
+        if ($request->hasFile('pdf'))
+        {
+           $pdfFile = $request->file('pdf');
+           $pdfFilename = time().'.'.$pdfFile->getClientOriginalExtension();
+           $pdfFile->move(public_path('uploads/resources-pdf/'), $pdfFilename);
+        }
+
+        $resource = Resource::create([
+            'title'      => $request->title,
+            'image'      => isset($filename) ? 'uploads/resources/'. $filename : NULL,
+            'pdf'        => isset($pdfFilename) ? 'uploads/resources-pdf/'.$pdfFilename : NULL,
+            'teaser'     => $request->teaser,
+            'rich_text'  => $request->rich_text
+        ]);
+
+        return Redirect::route("resources.index")->with('success-message','Resources Created Successfully.');
+
     }
 
     /**
