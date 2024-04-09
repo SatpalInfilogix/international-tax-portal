@@ -16,7 +16,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('users.index');
+        return view('users.index', [
+            'users' => User::get()
+        ]);
     }
 
     /**
@@ -70,7 +72,11 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('users.edit', [
+            'user' => User::find($id),
+            'countries' => Country::get(),
+            'userAdditionalData' => UserAdditionalData::where('user_id', $id)->first()
+        ]);
     }
 
     /**

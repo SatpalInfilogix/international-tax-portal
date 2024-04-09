@@ -6,7 +6,7 @@
                     {{ __('My Profile') }}
                 </h1>
 
-                <a href="{{ route('dashboard') }}"
+                <a href="{{ route('users.index') }}"
                     class="bg-green-500 border-green-600 hover:bg-green-700 text-white h-full px-4 py-2 rounded-md">
                     {{ __('Back') }}
                 </a>
