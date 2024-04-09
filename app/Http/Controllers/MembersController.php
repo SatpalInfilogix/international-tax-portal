@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\UserAdditionlData;
 
 class MembersController extends Controller
 {
@@ -11,7 +13,9 @@ class MembersController extends Controller
      */
     public function index()
     {
-        return view('members.index');
+        $members = User::with('userAdditionlData')->latest()->get();
+
+        return view('members.index', compact('members'));
     }
 
     /**

@@ -49,7 +49,7 @@ class UserController extends Controller
 
         $userAdditionalData = UserAdditionalData::create([
             'user_id' => $user->id,
-            'country' => $request->email,
+            'country' => $request->country,
             'company_size' => $request->company_size,
             'company_name' => $request->company_name
         ]);
