@@ -11,6 +11,7 @@ use Illuminate\View\View;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Country;
+use App\Models\UserAdditionalData;
 
 class ProfileController extends Controller
 {
@@ -22,6 +23,7 @@ class ProfileController extends Controller
         return view('profile.edit', [
             'user' => $request->user(),
             'countries' => Country::get(),
+            'userAdditionalData' => UserAdditionalData::where('user_id', $request->user()->id)->first()
         ]);
     }
 
