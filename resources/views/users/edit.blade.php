@@ -3,7 +3,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="flex justify-between">
                 <h1 class="font-semibold text-4xl text-gray-800 leading-tight">
-                    {{ __('My Profile') }}
+                    {{ __('Manage Profile') }}
                 </h1>
 
                 <a href="{{ route('dashboard') }}"
@@ -14,7 +14,7 @@
 
             <x-success-message :message="session('success-message')" />
 
-            <form name="update-profile" action="{{ route('profile.update') }}" method="POST" class="bg-white shadow" enctype="multipart/form-data">
+            <form name="update-user" action="{{ route('users.update', $user->id) }}" method="POST" class="bg-white shadow">
                 @csrf
                 @method('patch')
                 <div class="grid grid-cols-2">
@@ -36,7 +36,7 @@
 
     <script>
         $(function() {
-            $("form[name='update-profile']").validate({
+            $("form[name='update-user']").validate({
                 rules: {
                     name: "required",
                     email: {

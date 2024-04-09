@@ -2,58 +2,57 @@
 
 <div class="mb-2">
     <x-input-label for="country" :value="__('Country')" />
-    <select id="country" class= "border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
-        <option value="" selected disabled>Select Country</option>
+    <select id="country" name="country" class= "border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
+        <option value="" disabled @selected($userAdditionalData && !$userAdditionalData->country)>Select Country</option>
         @foreach ($countries as $country)
-        <option value="{{ $country->name }}">{{ $country->name }}</option>
+        <option value="{{ $country->name }}" @selected($userAdditionalData && $userAdditionalData->country==$country->name)>{{ $country->name }}</option>
         @endforeach
     </select>
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_size" :value="__('Size')" />
-    <select id="company_size" class= "border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
-        <option value="">Select Size</option>
-        <option value="small">Small</option>
-        <option value="medium">Medium</option>
-        <option value="large">Large</option>
+    <select id="company_size" name="company_size" class= "border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
+        <option value="Small" @selected($userAdditionalData && $userAdditionalData->company_size=='Small')>Small</option>
+        <option value="Medium" @selected($userAdditionalData && $userAdditionalData->company_size=='Medium')>Medium</option>
+        <option value="Large" @selected($userAdditionalData && $userAdditionalData->company_size=='Large')>Large</option>
     </select>
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_name" :value="__('Company')" />
     <x-text-input id="company_name" name="company_name" type="text" class="mt-1 block w-full"
-        :value="old('company_name', $user->phone_number)" />
+        :value="old('company_name', $userAdditionalData && $userAdditionalData->company_name)" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_address" :value="__('Address')" />
     <x-text-input id="company_address" name="company_address" type="text" class="mt-1 block w-full"
-        :value="old('company_address', $user->phone_number)" />
+        :value="old('company_address', $userAdditionalData && $userAdditionalData->company_address)" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_phone_number" :value="__('Telephone')" />
     <x-text-input id="company_phone_number" name="company_phone_number" type="text" class="mt-1 block w-full"
-        :value="old('company_phone_number', $user->phone_number)" />
+        :value="old('company_phone_number', $userAdditionalData && $userAdditionalData->company_phone_number)" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_description" :value="__('Description')" />
     <x-text-input id="company_description" name="company_description" type="text" class="mt-1 block w-full"
-        :value="old('company_description', $user->phone_number)" />
+        :value="old('company_description', $userAdditionalData && $userAdditionalData->phone_number)" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_year_established" :value="__('Year Established')" />
     <x-text-input id="company_year_established" name="company_year_established" type="text" class="mt-1 block w-full"
-        :value="old('company_year_established', $user->phone_number)" />
+        :value="old('company_year_established', $userAdditionalData && $userAdditionalData->phone_number)" />
 </div>
 
 <div class="mb-2">
     <x-input-label for="company_website" :value="__('Website')" />
     <x-text-input id="company_website" name="company_website" type="text" class="mt-1 block w-full"
-        :value="old('company_website', $user->phone_number)" />
+        :value="old('company_website', $userAdditionalData && $userAdditionalData->phone_number)" />
 </div>
 
 <div class="mb-2">
@@ -85,5 +84,5 @@
 <div>
     <x-input-label for="company_bio" :value="__('Bio')" />
     <x-text-area id="company_bio" name="company_bio" type="text" class="mt-1 block w-full"
-        :value="old('company_bio', $user->phone_number)" />
+        :value="old('company_bio', $userAdditionalData && $userAdditionalData->bio)" />
 </div>
