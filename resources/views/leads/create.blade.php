@@ -190,12 +190,12 @@
                     background: { required: "Please enter background" },
                 },
                 highlight: function(element) {
-                    $(element).removeClass('focus:border-green-500 focus:ring-green-500')
-                    $(element).addClass('focus:border-red-500 focus:ring-red-500')
+                    $(element).removeClass('border-gray-300 focus:border-green-500 focus:ring-green-500')
+                    $(element).addClass('border-red-600 focus:border-red-500 focus:ring-red-500')
                 },
                 unhighlight: function(element) {
-                    $(element).removeClass('focus:border-red-500 focus:ring-red-500')
-                    $(element).addClass('focus:border-green-500 focus:ring-green-500')
+                    $(element).removeClass('border-gray-300 border-red-600 focus:border-red-500 focus:ring-red-500')
+                    $(element).addClass('border-green-600 focus:border-green-500 focus:ring-green-500')
                 },
                 submitHandler: function(form) {
                     form.submit();

@@ -8,6 +8,7 @@ use App\Http\Controllers\OneToOneController;
 use App\Http\Controllers\ResourcesController;
 use App\Http\Controllers\MembersController;
 use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -20,6 +21,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::resources([
+        'users' => UserController::class,
         'leads' => LeadController::class,
         'expertise' => ExpertiseController::class,
         'news-and-events' => NewsAndEventsController::class,
