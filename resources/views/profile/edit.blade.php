@@ -12,10 +12,7 @@
                 </a>
             </div>
 
-            @if (session('status') === 'profile-updated')
-                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 7000)"
-                    class="text-sm text-gray-600">{{ __('Saved.') }}</p>
-            @endif
+            <x-success-message :message="session('success-message')" />
 
             <form name="update-profile" action="{{ route('profile.update') }}" method="POST" class="bg-white shadow">
                 @csrf

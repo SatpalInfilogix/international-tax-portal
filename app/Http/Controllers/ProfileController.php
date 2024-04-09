@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Country;
 
 class ProfileController extends Controller
 {
@@ -20,6 +21,7 @@ class ProfileController extends Controller
     {
         return view('profile.edit', [
             'user' => $request->user(),
+            'countries' => Country::get(),
         ]);
     }
 
@@ -53,7 +55,7 @@ class ProfileController extends Controller
         $user->user_status = $request->user_status;
         $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')->with('success-message', 'Profile has been succesfully updated');
     }
 
     /**
