@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Expertise;
 use Illuminate\Http\Request;
 use App\Models\UserAdditionalData;
+use Illuminate\Support\Facades\Auth;
 
 class ExpertiseController extends Controller
 {
@@ -33,7 +34,29 @@ class ExpertiseController extends Controller
      */
     public function store(Request $request)
     {
-        print_r($request->all());
+        $payload = [];
+
+        foreach ($request->advisors as $advisor) {
+            $payload[] = [
+                'introducer_id' => Auth::id(),
+                'advisor_id' => $advisor,
+                'request_message' => $request->request_message
+            ];
+        }
+    
+        if (!empty($payload)) {
+            $expertise_requests = Expertise::insert($payload);
+    
+            return response()->json([
+                'success' => true,
+                'message' => 'Expertise request has been sent successfuly!'
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'No data to insert',
+            ], 400);
+        }
     }
 
     /**

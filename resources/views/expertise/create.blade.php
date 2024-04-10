@@ -32,8 +32,8 @@
                     </div>
 
                     <div>
-                        <x-input-label for="request" :value="__('Request')" />
-                        <x-text-area id="request" name="request" type="text" class="mt-1 block w-full" />
+                        <x-input-label for="request_message" :value="__('Request')" />
+                        <x-text-area id="request_message" name="request_message" type="text" class="mt-1 block w-full" />
                     </div>
                 </div>
                 <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
@@ -89,12 +89,12 @@
         $("form[name='create-expertise-request']").validate({
             rules: {
                 country: "required",
-                request: "required",
+                request_message: "required",
                 "advisors[]": "required"
             },
             messages: {
                 country: "Please select a country",
-                request: "Please enter write your message",
+                request_message: "Please enter write your message",
                 "advisors[]": ""
             },
             highlight: function(element) {
@@ -107,7 +107,7 @@
                     'border-gray-300 border-red-600 focus:border-red-500 focus:ring-red-500')
                 $(element).addClass('border-green-600 focus:border-green-500 focus:ring-green-500')
             },
-            submitHandler: function(form) {
+            submitHandler: function(form) {                
                 $.ajax({
                     url: form.action,
                     type: form.method,
