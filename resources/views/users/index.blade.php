@@ -28,14 +28,14 @@
                                 <td class="px-4 py-2 border">{{ $user->name }}</td>
                                 <td class="px-4 py-2 border">Test company</td>
                                 <td class="px-4 py-2 border">India</td>
-                                <td class="px-4 py-2 border">Fusion User</td>
+                                <td class="px-4 py-2 border">{{ $user->user_type }} User</td>
                                 <td class="px-4 py-2 border">
                                     <a href="{{ route('users.edit', $user->id) }}"
                                         class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">Edit</a>
                                     <button
                                         class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Delete</button>
                                     <button
-                                        class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Active</button>
+                                        class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">{{$user->user_status}}</button>
                                 </td>
                             </tr>
                         @endforeach

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserAdditionlData;
 
-class MembersController extends Controller
+class MemberController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,9 @@ class MembersController extends Controller
     {
         $members = User::with('userAdditionlData')->latest()->get();
 
-        return view('members.index', compact('members'));
+        return view('members.index', [
+            'members' => $members
+        ]);
     }
 
     /**

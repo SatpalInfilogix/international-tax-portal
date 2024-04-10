@@ -40,14 +40,20 @@
 
 
         <div class="py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            @foreach($members as $key => $member)
-            <div class="px-4 py-4 col-span-1 lg:col-span-1 bg-white shadow-md">
-                <div class="flex">
-                    <h2 class="font-extrabold text-md mb-2 mr-1">{{ $member->name }}</h2>
-                    <span class="text-green-400">@if($member->userAdditionlData->country) ({{$member->userAdditionlData->country}}) @endif</span>
+            @foreach ($members as $member)
+                <div class="px-4 py-4 col-span-1 lg:col-span-1 bg-white shadow-md">
+                    <div class="flex">
+                        <h2 class="font-extrabold text-md mb-2 mr-1">{{ $member->name }}</h2>
+                        @if ($member->userAdditionlData && $member->userAdditionlData->country)
+                            <span class="text-green-400">
+                                ({{ $member->userAdditionlData->country }})
+                            </span>
+                        @endif
+                    </div>
+                    @if ($member->userAdditionlData && $member->userAdditionlData->company_name)
+                        <p class="text-gray-700 text-sm"> ({{ $member->userAdditionlData->company_name }})</p>
+                    @endif
                 </div>
-                <p class="text-gray-700 text-sm">@if($member->userAdditionlData->company_name) ({{ $member->userAdditionlData->company_name }}) @endif</p>
-            </div>
             @endforeach
             <!-- <div class="px-4 py-4 col-span-1 lg:col-span-1 bg-white shadow-md">
                 <div class="flex">
