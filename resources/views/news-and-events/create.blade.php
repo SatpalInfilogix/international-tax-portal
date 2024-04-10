@@ -27,7 +27,8 @@
 
                             <div class="pb-3">
                                 <x-input-label for="image" :value="__('Image')" />
-                                <x-file-input name="image" id="image"></x-file-input>
+                                <x-file-input name="image" id="image" accept="image/*" onchange="previewImage(event)"></x-file-input>
+                                <img id="preview" class="hidden" src="#" alt="Image Preview" width="50" hight="50">
                             </div>
 
                             <div class="pb-3">
@@ -79,5 +80,15 @@
                 }
             });
         });
+
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function(){
+                var output = document.getElementById('preview');
+                output.src = reader.result;
+                output.classList.remove('hidden');
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
     </script>
 </x-app-layout>

@@ -38,9 +38,13 @@
                         <a href="{{ route('news-and-events.edit', $newsAndEvent->id) }}" class="bg-green-500 text-white hover:bg-green-600 py-1 px-2 rounded-full mr-1 text-md">
                             <i class="ri-pencil-line"></i>
                         </a>
-                        <button class="bg-green-500 text-white hover:bg-green-600 py-1 px-2 rounded-full text-md">
-                            <i class="ri-close-fill"></i>
-                        </button>
+                        <!-- <form method="POST" action="{{route('news-and-events.destroy', $newsAndEvent->id) }}"  >
+                            @method('DELETE')
+                            @csrf -->
+                            <button data-id="{{ $newsAndEvent->id }} " data-href="{{ route('news-and-events.destroy', $newsAndEvent->id) }}" class="bg-green-500 text-white hover:bg-green-600 py-1 px-2 rounded-full text-md confirm-delete">
+                                <i class="ri-close-fill"></i>
+                            </button>
+                        <!-- </form> -->
                     </div>
                 </div>
                 
@@ -56,4 +60,35 @@
             <div class="font-bold text-center mt-5 text-red-500">{{__('Records Not Found')}}</div>
         @endif
     </div>
+
+    <script>
+        $('.confirm-delete').on('click', function() {
+            var id = $(this).data('id');
+            var href = "{{ route('news-and-events.index') }}";
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this !",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "{{ route('news-and-events.destroy', '') }}/" + id,
+                        type:'DELETE',
+                        datatype:'json',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                        }, success:function(data)
+                        {
+                            if(data.success == true){
+                                window.location.href = href;
+                            }
+                        }
+                    })
+                }
+            });
+        });
+    </script>
 </x-app-layout>
