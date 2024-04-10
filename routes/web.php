@@ -6,7 +6,7 @@ use App\Http\Controllers\ExpertiseController;
 use App\Http\Controllers\NewsAndEventsController;
 use App\Http\Controllers\OneToOneController;
 use App\Http\Controllers\ResourcesController;
-use App\Http\Controllers\MembersController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
         'news-and-events' => NewsAndEventsController::class,
         'one-to-one' => OneToOneController::class,
         'resources' => ResourcesController::class,
-        'members' => MembersController::class,
+        'members' => MemberController::class,
         'reports' => ReportsController::class,
     ]);
 
