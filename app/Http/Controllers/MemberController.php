@@ -15,7 +15,9 @@ class MemberController extends Controller
     {
         $members = User::with('userAdditionlData')->latest()->get();
 
-        return view('members.index', compact('members'));
+        return view('members.index', [
+            'members' => $members
+        ]);
     }
 
     /**

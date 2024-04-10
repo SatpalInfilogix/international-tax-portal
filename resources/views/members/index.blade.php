@@ -40,7 +40,7 @@
 
 
         <div class="py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            @foreach ($members as $key => $member)
+            @foreach ($members as $member)
                 <div class="px-4 py-4 col-span-1 lg:col-span-1 bg-white shadow-md">
                     <div class="flex">
                         <h2 class="font-extrabold text-md mb-2 mr-1">{{ $member->name }}</h2>
