@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lead;
 use Illuminate\Http\Request;
-use App\Models\Country;
+use App\Models\UserAdditionalData;
 
 class LeadController extends Controller
 {
@@ -19,10 +19,12 @@ class LeadController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+        $countries = UserAdditionalData::select('country')->distinct()->get();;
+
         return view('leads.create', [
-            'countries' => Country::get()
+            'countries' => $countries
         ]);
     }
 

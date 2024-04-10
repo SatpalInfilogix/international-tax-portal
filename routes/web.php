@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
         'reports' => ReportsController::class,
     ]);
 
+    Route::get('/get-members-by-country/{country}', [MemberController::class, 'get_by_country'])->name('members.get-by-country');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

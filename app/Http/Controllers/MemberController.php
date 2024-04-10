@@ -21,6 +21,20 @@ class MemberController extends Controller
     }
 
     /**
+     * Display a listing of the resource by the country name.
+     */
+    public function get_by_country(Request $request, $country)
+    {
+        $members = User::with('userAdditionlData')
+                    ->whereHas('userAdditionlData', function ($query) use ($country) {
+                        $query->where('country', $country);
+                    })
+                    ->latest()->get();
+
+        return $members;
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()

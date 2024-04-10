@@ -15,10 +15,10 @@
                             <div class="pb-3">
                                 <x-input-label for="country" :value="__('Country')" />
                                 <select name="country" id="country"
-                                    class= "border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md shadow-sm w-full">
+                                    class= "mt-1 border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md shadow-sm w-full">
                                     <option value="" selected disabled>Select Country</option>
                                     @foreach ($countries as $country)
-                                        <option value="{{ $country->name }}">{{ $country->name }}</option>
+                                        <option value="{{ $country->country }}">{{ $country->country }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -31,27 +31,32 @@
 
                             <div class="pb-3">
                                 <x-input-label for="client_name" :value="__('Client Name')" />
-                                <x-text-input id="client_name" name="client_name" type="text" class="mt-1 block w-full" />
+                                <x-text-input id="client_name" name="client_name" type="text"
+                                    class="mt-1 block w-full" />
                             </div>
 
                             <div class="pb-3">
                                 <x-input-label for="client_email" :value="__('Client Email')" />
-                                <x-text-input id="client_email" name="client_email" type="text" class="mt-1 block w-full" />
+                                <x-text-input id="client_email" name="client_email" type="text"
+                                    class="mt-1 block w-full" />
                             </div>
 
                             <div class="pb-3">
                                 <x-input-label for="phone_number" :value="__('Phone number')" />
-                                <x-text-input id="phone_number" name="phone_number" type="text" class="mt-1 block w-full" />
+                                <x-text-input id="phone_number" name="phone_number" type="text"
+                                    class="mt-1 block w-full" />
                             </div>
 
                             <div class="pb-3">
                                 <x-input-label for="when_to_connect" :value="__('When to contact')" />
-                                <x-text-input id="when_to_connect" name="when_to_connect" type="text" class="mt-1 block w-full" />
+                                <x-text-input id="when_to_connect" name="when_to_connect" type="text"
+                                    class="mt-1 block w-full" />
                             </div>
 
                             <div class="pb-3">
                                 <x-input-label for="background" :value="__('Background')" />
-                                <x-text-area id="background" name="background" type="text" class="mt-1 block w-full" />
+                                <x-text-area id="background" name="background" type="text"
+                                    class="mt-1 block w-full" />
                             </div>
 
                             <h2 class="text-lg font-medium text-gray-900 mb-4">{{ __('Service requirements') }}</h2>
@@ -118,7 +123,8 @@
                             </div>
                         </div>
 
-                        <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg height-max-content">
+                        <div
+                            class="p-4 sm:p-8 bg-white shadow sm:rounded-lg height-max-content hidden available-members">
                             <h2 class="text-lg font-medium text-gray-900 mb-4">{{ __('Members Available') }}</h2>
 
                             <div class="flex">
@@ -130,28 +136,8 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-center mt-2">
-                                <div class="w-full bg-white shadow-xl">
-                                    <div class="max-w-sm rounded overflow-hidden shadow-lg flex p-2">
-                                        <div class="flex w-full">
-                                            <img src="{{ asset('assets/icons/user-circle.jpg') }}" class="w-20"
-                                                alt="User Image">
-                                            <div class="px-6 py-4">
-                                                <div class="font-bold text-xl mb-2">Admin</div>
-                                                <div class="font-bold text-md mb-2">Ftest</div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <img src="{{ asset('assets/icons/users-group.png') }}" alt=""
-                                                class="w-20">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="w-20 text-center">
-                                    <input id="member-1" type="checkbox"
-                                        class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500"
-                                        name="member[]">
-                                </div>
+                            <div class="members-list">
+                               
                             </div>
                         </div>
                     </div>
@@ -162,39 +148,130 @@
 
     <script>
         $(function() {
+            $('[name="country"]').change(function() {
+                $.ajax({
+                    url: `{{ url('get-members-by-country') }}/${ $(this).val() }`,
+                    method: 'GET',
+                    success: function(response) {
+                        console.log('..', response);
+
+                        let html = ``;
+
+                        for(let i=0; i<response.length; i++){
+                            console.log(response[i]);
+
+                            html += ` <div class="flex items-center mt-2">
+                                <div class="w-full bg-white">
+                                    <div class="max-w-sm rounded overflow-hidden shadow-lg px-4 py-2">
+                                        <div class=" flex">
+                                            <div class="flex w-full">
+                                                <img src="http://127.0.0.1:8000/assets/icons/user-circle.jpg" class="w-20 h-20" alt="User Image">
+                                                <div class="px-6 py-4">
+                                                    <div class="font-bold text-xl mb-2">${response[i].name}</div>`;
+                                                    if(response[i].user_additionl_data && response[i].user_additionl_data.company_name){
+                                                        html += `<div class="font-bold text-md mb-2">${response[i].user_additionl_data.company_name}</div>`;
+                                                    }
+                                                html += `</div>
+                                            </div>
+                                            <div>
+                                                <img src="http://127.0.0.1:8000/assets/icons/users-group.png" alt="" class="w-20">
+                                            </div>
+                                        </div>`;
+                                        
+                                        if(response[i].areas_of_expertise){
+                                            let expertises = response[i].areas_of_expertise.split(', ');
+                                            console.log('..', expertises)
+                                            let expertisesHtml = ``;
+
+                                            for(let j = 0; j < expertises.length; j++){
+                                                expertisesHtml += `<div class="font-bold text-sm mr-2 flex items-center">
+                                                    <span class="size-1.5 inline-block rounded-full bg-green-800 mr-1"></span>
+                                                    ${expertises[j]}
+                                                </div>`;
+                                            }
+                                            
+                                            html += `<div class="flex flex-wrap my-2">${expertisesHtml}</div>`;
+                                        }
+
+                                    html += `</div> 
+                                </div>
+                                <div class="w-20 text-center">
+                                    <input type="checkbox" name="member[]" class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
+                                </div>
+                            </div>`;
+                        }
+                        
+                        $('.members-list').append(html);
+
+                        if (response.length > 0) {
+                            $('.available-members').removeClass('hidden');
+                        } else {
+                            $('.available-members').addClass('hidden');
+                        }
+                    }
+                })
+                console.log($(this).val())
+            })
+
             $("form[name='create-lead']").validate({
                 rules: {
-                    country: { required: true },
-                    introducer: { required: true },
-                    client_name: { required: true },
-                    client_email: { required: true },
+                    country: {
+                        required: true
+                    },
+                    introducer: {
+                        required: true
+                    },
+                    client_name: {
+                        required: true
+                    },
+                    client_email: {
+                        required: true
+                    },
                     phone_number: {
                         required: true,
                         minlength: 10,
                         maxlength: 10
                     },
-                    when_to_connect: { required: true },
-                    background: { required: true }
+                    when_to_connect: {
+                        required: true
+                    },
+                    background: {
+                        required: true
+                    }
                 },
                 messages: {
-                    country: { required: "Please select a country" },
-                    introducer: { required: "Please enter an introducer" },
-                    client_name: { required: "Please enter client name" },
-                    client_email: { required: "Please enter an email address" },
+                    country: {
+                        required: "Please select a country"
+                    },
+                    introducer: {
+                        required: "Please enter an introducer"
+                    },
+                    client_name: {
+                        required: "Please enter client name"
+                    },
+                    client_email: {
+                        required: "Please enter an email address"
+                    },
                     phone_number: {
                         required: "Please enter a phone number",
                         minlength: "Please enter valid phone number",
                         maxlength: "Please enter valid phone number"
                     },
-                    when_to_connect: { required: "Please enter when to connect" },
-                    background: { required: "Please enter background" },
+                    when_to_connect: {
+                        required: "Please enter when to connect"
+                    },
+                    background: {
+                        required: "Please enter background"
+                    },
                 },
                 highlight: function(element) {
-                    $(element).removeClass('border-gray-300 focus:border-green-500 focus:ring-green-500')
+                    $(element).removeClass(
+                        'border-gray-300 focus:border-green-500 focus:ring-green-500')
                     $(element).addClass('border-red-600 focus:border-red-500 focus:ring-red-500')
                 },
                 unhighlight: function(element) {
-                    $(element).removeClass('border-gray-300 border-red-600 focus:border-red-500 focus:ring-red-500')
+                    $(element).removeClass(
+                        'border-gray-300 border-red-600 focus:border-red-500 focus:ring-red-500')
                     $(element).addClass('border-green-600 focus:border-green-500 focus:ring-green-500')
                 },
                 submitHandler: function(form) {
