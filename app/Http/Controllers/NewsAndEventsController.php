@@ -110,6 +110,9 @@ class NewsAndEventsController extends Controller
     {
         $newsAndEvents = NewsAndEvents::findOrFail($id)->delete();
 
-        return Redirect::route("news-and-events.index")->with('success-message','News And Events Deleted Successfully.');
+        return response()->json([
+            'success' => true,
+            'message' => 'record delete successfully.'
+        ]);
     }
 }

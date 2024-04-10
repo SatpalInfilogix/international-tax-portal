@@ -5,23 +5,24 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div class="flex justify-between">
                     <h1 class="font-semibold text-2xl text-gray-800 leading-tight">
-                        {{ __('Add Resources') }}
+                        {{ __('Update Resources') }}
                     </h1>    
         
-                    <a href="{{ route('news-and-events.index') }}"
+                    <a href="{{ route('resources.index') }}"
                         class="bg-green-500 border-green-600 hover:bg-green-700 text-white h-full px-4 py-2 rounded-md">
                         {{ __('Back') }}
                     </a>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
-                    <form action="{{ route('resources.store') }}" method="post" name="resource"
+                    <form action="{{ route('resources.update',$resource->id ) }}" method="post" name="resource"
                             class="bg-white shadow" enctype="multipart/form-data">
                         @csrf
+                        @method('patch')
                     <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <div class="mb-3">
                             <x-input-label for="title" :value="__('Title')" />
-                            <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" />
+                            <x-text-input id="title" name="title" type="text" class="mt-1 block w-full" :value="old('title', $resource->title)" />
                         </div>
 
                         <div class="mb-3">
@@ -36,17 +37,17 @@
 
                         <div class="mb-3">
                             <x-input-label for="teaser" :value="__('Teaser')" />
-                            <x-text-input id="teaser" name="teaser" type="text" class="mt-1 block w-full" />
+                            <x-text-input id="teaser" name="teaser" type="text" class="mt-1 block w-full" :value="old('title', $resource->teaser)"/>
                         </div>
 
                         <div class="mb-3">
                             <x-input-label for="name" :value="__('Rich text')" />
-                            <x-text-area id="name" name="rich_text" type="text" class="mt-1 block w-full" />
+                            <x-text-area id="name" name="rich_text" type="text" class="mt-1 block w-full" :value="old('title', $resource->rich_text)"/>
                         </div>
 
                         <div class="buttons-container mt-4">
                             <x-primary-button>
-                                {{ __('Add Resource') }}
+                            {{ __('Update Resource') }}
                             </x-primary-button>
                         </div>
                     </div>
@@ -61,11 +62,9 @@
             $("form[name='resource']").validate({
                 rules: {
                     title: "required",
-                    image: "required",
                 },
                 messages: {
                     title: "Title field is required.",
-                    image: "Image field is required"
                 },
                 highlight: function(element) {
                     $(element).removeClass('border-gray-300 focus:border-green-500 focus:ring-green-500')
