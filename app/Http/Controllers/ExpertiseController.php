@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Expertise;
 use Illuminate\Http\Request;
+use App\Models\UserAdditionalData;
 
 class ExpertiseController extends Controller
 {
@@ -12,7 +13,11 @@ class ExpertiseController extends Controller
      */
     public function index()
     {
-        return view('expertise.index');
+        $countries = UserAdditionalData::select('country')->distinct()->get();;
+
+        return view('expertise.index', [
+            'countries' => $countries
+        ]);
     }
 
     /**
@@ -28,7 +33,7 @@ class ExpertiseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        print_r($request->all());
     }
 
     /**
