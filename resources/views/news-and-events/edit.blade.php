@@ -44,7 +44,7 @@
 
                             <div class="buttons-container mt-4">
                                 <x-primary-button>
-                                    {{ __('Add News/Event') }}
+                                    {{ __('Update News/Event') }}
                                 </x-primary-button>
                             </div>
                         </div>
