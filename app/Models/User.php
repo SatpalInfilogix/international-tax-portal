@@ -43,7 +43,10 @@ class User extends Authenticatable
         ];
     }
 
-    public function userAdditionlData()
+    /**
+     * Join to get user additional information 
+     */
+    public function userAdditionalData()
     {
         return $this->hasOne(UserAdditionalData::class);
     }

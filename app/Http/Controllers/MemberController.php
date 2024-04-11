@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\UserAdditionlData;
+use App\Models\UserAdditionalData;
 
 class MemberController extends Controller
 {
@@ -13,7 +13,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $members = User::with('userAdditionlData')->latest()->get();
+        $members = User::with('userAdditionalData')->latest()->get();
 
         return view('members.index', [
             'members' => $members
@@ -25,8 +25,8 @@ class MemberController extends Controller
      */
     public function get_by_country(Request $request, $country)
     {
-        $members = User::with('userAdditionlData')
-                    ->whereHas('userAdditionlData', function ($query) use ($country) {
+        $members = User::with('userAdditionalData')
+                    ->whereHas('userAdditionalData', function ($query) use ($country) {
                         $query->where('country', $country);
                     })
                     ->latest()->get();

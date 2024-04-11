@@ -26,8 +26,8 @@
                         @foreach ($users as $user)
                             <tr>
                                 <td class="px-4 py-2 border">{{ $user->name }}</td>
-                                <td class="px-4 py-2 border">{{ optional($user->userAdditionlData)->company_name ?? 'N/A'}}</td>
-                                <td class="px-4 py-2 border">{{ optional($user->userAdditionlData)->country ?? 'N/A'}}</td>
+                                <td class="px-4 py-2 border">{{ optional($user->userAdditionalData)->company_name ?? 'N/A'}}</td>
+                                <td class="px-4 py-2 border">{{ optional($user->userAdditionalData)->country ?? 'N/A'}}</td>
                                 <td class="px-4 py-2 border">{{ $user->user_type }} User</td>
                                 <td class="px-4 py-2 border">
                                     <a href="{{ route('users.edit', $user->id) }}"
