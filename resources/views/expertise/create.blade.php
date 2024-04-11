@@ -113,7 +113,22 @@
                     type: form.method,
                     data: $(form).serialize(),
                     success: function(response) {
-                        console.log('__', response)
+                        if(response.success){
+                            $(`#overlay`).addClass('hidden');
+                            $('[data-modal="create-new-expertise-request"]').addClass('hidden');
+                                
+                            swal({
+                                title: "Success!",
+                                text: "Expertise request sent successfully!",
+                                icon: "success",
+                                buttons: false,
+                                timer: 2000
+                            });
+                            
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000);
+                        }
                     }
                 });
             }

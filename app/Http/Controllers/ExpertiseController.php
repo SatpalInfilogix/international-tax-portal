@@ -14,10 +14,14 @@ class ExpertiseController extends Controller
      */
     public function index()
     {
-        $countries = UserAdditionalData::select('country')->distinct()->get();;
+        $countries = UserAdditionalData::select('country')->distinct()->get();
+        $sent_requests = Expertise::where('introducer_id', Auth::id())->get();
+        $received_requests = Expertise::where('advisor_id', Auth::id())->get();
 
         return view('expertise.index', [
-            'countries' => $countries
+            'countries' => $countries,
+            'sent_requests' => $sent_requests,
+            'received_requests' => $received_requests
         ]);
     }
 
@@ -34,29 +38,20 @@ class ExpertiseController extends Controller
      */
     public function store(Request $request)
     {
-        $payload = [];
 
         foreach ($request->advisors as $advisor) {
-            $payload[] = [
+            Expertise::create([
                 'introducer_id' => Auth::id(),
                 'advisor_id' => $advisor,
                 'request_message' => $request->request_message
-            ];
-        }
-    
-        if (!empty($payload)) {
-            $expertise_requests = Expertise::insert($payload);
-    
-            return response()->json([
-                'success' => true,
-                'message' => 'Expertise request has been sent successfuly!'
             ]);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'No data to insert',
-            ], 400);
         }
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Expertise request has been sent successfuly!'
+        ]);
+        
     }
 
     /**

@@ -38,32 +38,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="px-4 py-2 border">Sachin</td>
-                                <td class="px-4 py-2 border">Admin</td>
-                                <td class="px-4 py-2 border">2021-05-14</td>
-                                <td class="px-4 py-2 border">
-                                    <button
-                                        class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">View</button>
-                                </td>
-                                <td class="px-4 py-2 border">
-                                    <input type="checkbox"
-                                        class="rounded border-gray-300 text-green-600 shadow-sm focus:green-green-500">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="px-4 py-2 border">Test</td>
-                                <td class="px-4 py-2 border">Admin</td>
-                                <td class="px-4 py-2 border">2021-05-14</td>
-                                <td class="px-4 py-2 border">
-                                    <button
-                                        class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">View</button>
-                                </td>
-                                <td class="px-4 py-2 border">
-                                    <input type="checkbox"
-                                        class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
-                                </td>
-                            </tr>
+                            @foreach($sent_requests as $sent_request)
+
+                                <tr>
+                                    <td class="px-4 py-2 border">Sachin</td>
+                                    <td class="px-4 py-2 border">Admin</td>
+                                    <td class="px-4 py-2 border">{{  Carbon\Carbon::parse($sent_request->created_at)->format('Y-m-d'); }}</td>
+                                    <td class="px-4 py-2 border">
+                                        <button
+                                            class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">View</button>
+                                    </td>
+                                    <td class="px-4 py-2 border">
+                                        <input type="checkbox"
+                                            class="rounded border-gray-300 text-green-600 shadow-sm focus:green-green-500">
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -98,6 +88,4 @@
             $('.data-table').DataTable();
         });
     </script>
-
-
 </x-app-layout>
