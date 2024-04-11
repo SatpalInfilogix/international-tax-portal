@@ -74,5 +74,31 @@
                 }
             });
         });
+
+        function previewFile(input) {
+            var file = $("#logo_upload").get(0).files[0];
+            if (file) {
+                $('#preview-logo').removeClass('hidden');
+
+                var reader = new FileReader();
+                reader.onload = function() {
+                    $("#preview-logo").attr("src", reader.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function previewPdf(input) {
+            var file = $("#headshot_upload").get(0).files[0];
+            if (file) {
+                $('#preview-headshot').removeClass('hidden');
+
+                var reader = new FileReader();
+                reader.onload = function() {
+                    $("#preview-headshot").attr("src", reader.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
     </script>
 </x-app-layout>

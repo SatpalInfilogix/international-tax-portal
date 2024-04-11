@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         return view('users.index', [
-            'users' => User::get()
+            'users' => User::with('userAdditionlData')->latest()->get()
         ]);
     }
 
@@ -141,8 +141,8 @@ class UserController extends Controller
                 'company_description'      => $request->company_description,
                 'company_year_established' => $request->company_year_established,
                 'company_website'          => $request->company_website,
-                'company_logo'             => isset($filename) ? 'uploads/company_logo/'. $filename : $oldLogo,
-                'headshot_path'            => isset($headshotFilename) ? 'uploads/headshot_upload/'. $headshotFilename : $oldHeadshotFile,
+                'company_logo'             => isset($filename) ? 'uploads/company-logo/'. $filename : $oldLogo,
+                'headshot_path'            => isset($headshotFilename) ? 'uploads/headshots/'. $headshotFilename : $oldHeadshotFile,
                 'bio'                      => $request->company_bio,
             ]);
 
@@ -154,6 +154,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::where('id', $id)->delete();
+        $userAdditionalData = UserAdditionalData::where('user_id', $id)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile has been successfully deleted.'
+        ]);
     }
 }

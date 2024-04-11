@@ -57,12 +57,14 @@
 
 <div class="mb-2">
     <x-input-label for="logo_upload" :value="__('Logo upload')" />
-    <x-file-input name="logo_upload" id="logo_upload"></x-file-input>
+    <x-file-input name="logo_upload" id="logo_upload" accept="image/*" onchange="previewFile()"></x-file-input>
+    <img src="{{ asset($userAdditionalData->company_logo) }}" @class(['hidden' => !$userAdditionalData->company_logo]) id="preview-logo" width="50" height="50">
 </div>
 
 <div class="mb-2">
     <x-input-label for="headshot_upload" :value="__('Headshot upload')" />
-    <x-file-input name="headshot_upload" id="logo_upload"></x-file-input>
+    <x-file-input name="headshot_upload" id="headshot_upload" onchange="previewPdf()"></x-file-input>
+    <a href="{{ asset($userAdditionalData->headshot_path) }}" class="text-green-600" @class(['hidden' => !$userAdditionalData->headshot_path]) target="_blank">Click here to view</a>
 </div>
 
 <div class="mb-2">

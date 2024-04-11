@@ -26,14 +26,14 @@
                         @foreach ($users as $user)
                             <tr>
                                 <td class="px-4 py-2 border">{{ $user->name }}</td>
-                                <td class="px-4 py-2 border">Test company</td>
-                                <td class="px-4 py-2 border">India</td>
+                                <td class="px-4 py-2 border">{{ optional($user->userAdditionlData)->company_name ?? 'N/A'}}</td>
+                                <td class="px-4 py-2 border">{{ optional($user->userAdditionlData)->country ?? 'N/A'}}</td>
                                 <td class="px-4 py-2 border">{{ $user->user_type }} User</td>
                                 <td class="px-4 py-2 border">
                                     <a href="{{ route('users.edit', $user->id) }}"
                                         class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">Edit</a>
-                                    <button
-                                        class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Delete</button>
+                                    <button data-id="{{ $user->id }}"
+                                        class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 confirm-delete">Delete</button>
                                     <button
                                         class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">{{$user->user_status}}</button>
                                 </td>
@@ -48,6 +48,35 @@
     <script>
         $(document).ready(function() {
             $('.data-table').DataTable();
+        });
+
+        $('.confirm-delete').on('click', function() {
+            var id = $(this).data('id');
+            var href = "{{ route('users.index') }}";
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this !",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "{{ route('users.destroy', '') }}/" + id,
+                        type:'DELETE',
+                        datatype:'json',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                        }, success:function(data)
+                        {
+                            if(data.success == true){
+                                window.location.reload();
+                            }
+                        }
+                    })
+                }
+            });
         });
     </script>
 
