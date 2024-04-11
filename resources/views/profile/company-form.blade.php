@@ -57,18 +57,20 @@
 
 <div class="mb-2">
     <x-input-label for="logo_upload" :value="__('Logo upload')" />
-    <x-file-input name="logo_upload" id="logo_upload"></x-file-input>
+    <x-file-input name="logo_upload" id="logo_upload" accept="image/*" onchange="previewFile()"></x-file-input>
+    <img src="{{ asset($userAdditionalData->company_logo) }}" @class(['hidden' => !$userAdditionalData->company_logo]) id="preview-logo" width="50" height="50">
 </div>
 
 <div class="mb-2">
     <x-input-label for="headshot_upload" :value="__('Headshot upload')" />
-    <x-file-input name="headshot_upload" id="logo_upload"></x-file-input>
+    <x-file-input name="headshot_upload" id="headshot_upload" onchange="previewPdf()"></x-file-input>
+    <a href="{{ asset($userAdditionalData->headshot_path) }}" @class(['hidden' => !$userAdditionalData->headshot_path]) id="preview-headshot" target="_blank">Click here to</a>
 </div>
 
 <div class="mb-2">
     <x-input-label for="user_status" :value="__('Status')" />
     <select id="user_status" name="user_status" class= "border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
-        <option value="Active" @selected($user->user_status== 'Active')>Active</option>
+        <option value="Active" @selected($user->user_status == 'Active')>Active</option>
         <option value="Deactive" @selected($user->user_status == 'Deactive')>Deactive</option>
     </select>
 </div>

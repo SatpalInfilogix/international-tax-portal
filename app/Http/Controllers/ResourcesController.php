@@ -132,6 +132,11 @@ class ResourcesController extends Controller
      */
     public function destroy(Resource $resource)
     {
-        //
+        $newsAndEvents = Resource::findOrFail($resource->id)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Resource delete successfully.'
+        ]);
     }
 }

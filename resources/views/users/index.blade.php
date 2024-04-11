@@ -26,16 +26,15 @@
                         @foreach ($users as $user)
                             <tr>
                                 <td class="px-4 py-2 border">{{ $user->name }}</td>
-                                <td class="px-4 py-2 border">Test company</td>
-                                <td class="px-4 py-2 border">India</td>
+                                <td class="px-4 py-2 border">{{ optional($user->userAdditionlData)->company_name ?? 'N/A'}}</td>
+                                <td class="px-4 py-2 border">{{ optional($user->userAdditionlData)->country ?? 'N/A'}}</td>
                                 <td class="px-4 py-2 border">{{ $user->user_type }} User</td>
                                 <td class="px-4 py-2 border">
                                     <a href="{{ route('users.edit', $user->id) }}"
                                         class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">Edit</a>
-                                    <button
-                                        class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Delete</button>
-                                    <button
-                                        class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">{{$user->user_status}}</button>
+                                    <button data-id="{{ $user->id }}"
+                                        class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 confirm-delete">Delete</button>
+                                    <button data-id="{{ $user->id }}" data-status="{{ $user->user_status == 'Deactive'  ? 'Active' : 'Deactive'}}" class="{{ $user->user_status == 'Active' ? 'bg-green-500' : 'bg-red-500' }} rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 toggle-class">{{ $user->user_status == 'Active' ? 'Active' : 'Deactive' }}</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -44,11 +43,73 @@
             </div>
         </div>
     </div>
-
     <script>
         $(document).ready(function() {
             $('.data-table').DataTable();
         });
+
+        $('.confirm-delete').on('click', function() {
+            var id = $(this).data('id');
+            var href = "{{ route('users.index') }}";
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this !",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "{{ route('users.destroy', '') }}/" + id,
+                        type:'DELETE',
+                        datatype:'json',
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                        }, success:function(data)
+                        {
+                            if(data.success == true){
+                                window.location.reload();
+                            }
+                        }
+                    })
+                }
+            });
+        });
+
+        $(function() {
+            $('.toggle-class').on('click',function() {
+                var id = $(this).data('id');
+                var status = $(this).data('status');
+                swal({
+                    title: "Are you sure?",
+                    text: `You want to ${status == 'Deactive' ? 'active' : 'deactive'} this user!`,
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            type: "post",
+                            dataType: "json",
+                            url: "{{ route('user-status') }}",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                'status': status,
+                                'id': id
+                            },
+                            success: function(result){
+                                if(result.success == true){
+                                    window.location.reload();
+                                }
+                            }
+                        });
+                    }
+                })
+            });
+        })
+
     </script>
 
 </x-app-layout>

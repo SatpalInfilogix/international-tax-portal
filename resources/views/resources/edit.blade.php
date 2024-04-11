@@ -28,6 +28,7 @@
                         <div class="mb-3">
                             <x-input-label for="image" :value="__('Image')" />
                             <x-file-input name="image" id="image" accept="image/*"></x-file-input>
+                            <img id="imagePreview" src="{{URL::asset($resource->image)}}" accept="image/*" width="50" hight="50">
                         </div>
 
                         <div class="mb-3">
@@ -79,6 +80,19 @@
                     form.submit();
                 }
             });
+        });
+
+        document.getElementById('image').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').setAttribute('src', e.target.result);
+                }
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('imagePreview').setAttribute('src', '');
+            }
         });
     </script>
 </x-app-layout>
