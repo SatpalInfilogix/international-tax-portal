@@ -34,8 +34,7 @@
                                         class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">Edit</a>
                                     <button data-id="{{ $user->id }}"
                                         class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 confirm-delete">Delete</button>
-                                    <button
-                                        class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">{{$user->user_status}}</button>
+                                    <button data-id="{{ $user->id }}" data-status="{{ $user->user_status == 'Deactive'  ? 'Active' : 'Deactive'}}" class="{{ $user->user_status == 'Active' ? 'bg-green-500' : 'bg-red-500' }} rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 toggle-class">{{ $user->user_status == 'Active' ? 'Active' : 'Deactive' }}</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -44,7 +43,6 @@
             </div>
         </div>
     </div>
-
     <script>
         $(document).ready(function() {
             $('.data-table').DataTable();
@@ -78,6 +76,40 @@
                 }
             });
         });
+
+        $(function() {
+            $('.toggle-class').on('click',function() {
+                var id = $(this).data('id');
+                var status = $(this).data('status');
+                swal({
+                    title: "Are you sure?",
+                    text: `You want to ${status == 'Deactive' ? 'active' : 'deactive'} this user!`,
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            type: "post",
+                            dataType: "json",
+                            url: "{{ route('user-status') }}",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                'status': status,
+                                'id': id
+                            },
+                            success: function(result){
+                                if(result.success == true){
+                                    window.location.reload();
+                                }
+                            }
+                        });
+                    }
+                })
+            });
+        })
+
     </script>
 
 </x-app-layout>

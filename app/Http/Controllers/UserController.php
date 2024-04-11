@@ -162,4 +162,22 @@ class UserController extends Controller
             'message' => 'Profile has been successfully deleted.'
         ]);
     }
+
+    public function status(Request $request)
+    {
+        $status = 'Active';
+        if($request->status == 'Deactive') {
+            $status = 'Deactive';
+        }
+        $user = User::where('id', $request->id)->first();
+        $user->update([
+            'user_status' => $status
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data'    => $status,
+            'message'=>'Status change successfully.'
+        ]);
+    }
 }
