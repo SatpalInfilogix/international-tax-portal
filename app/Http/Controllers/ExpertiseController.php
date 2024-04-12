@@ -15,8 +15,14 @@ class ExpertiseController extends Controller
     public function index()
     {
         $countries = UserAdditionalData::select('country')->distinct()->get();
-        $sent_requests = Expertise::where('introducer_id', Auth::id())->get();
-        $received_requests = Expertise::where('advisor_id', Auth::id())->get();
+        $sent_requests = Expertise::where('introducer_id', Auth::id())
+            ->with('advisor')
+            ->get();
+
+        $received_requests = Expertise::where('advisor_id', Auth::id())
+            ->with('introducer')
+            ->with('advisor')
+            ->get();
 
         return view('expertise.index', [
             'countries' => $countries,
@@ -38,7 +44,6 @@ class ExpertiseController extends Controller
      */
     public function store(Request $request)
     {
-
         foreach ($request->advisors as $advisor) {
             Expertise::create([
                 'introducer_id' => Auth::id(),
@@ -51,7 +56,6 @@ class ExpertiseController extends Controller
             'success' => true,
             'message' => 'Expertise request has been sent successfuly!'
         ]);
-        
     }
 
     /**
@@ -75,7 +79,8 @@ class ExpertiseController extends Controller
      */
     public function update(Request $request, Expertise $expertise)
     {
-        //
+        print_r($request->all());
+        print_r($expertise);
     }
 
     /**
@@ -84,5 +89,20 @@ class ExpertiseController extends Controller
     public function destroy(Expertise $expertise)
     {
         //
+    }
+
+    /**
+     * Update the is_resolved status for the expertise
+     */
+    public function update_request_status(Request $request, $expertise_id){
+        Expertise::where('id', $expertise_id)
+            ->update([
+                'is_resolved' => $request->is_resolved
+            ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Expertise request resolved status has been updated successfuly!'
+        ]);
     }
 }

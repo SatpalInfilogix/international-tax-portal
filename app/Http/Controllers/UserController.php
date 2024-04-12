@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         return view('users.index', [
-            'users' => User::with('userAdditionlData')->latest()->get()
+            'users' => User::with('userAdditionalData')->latest()->get()
         ]);
     }
 
