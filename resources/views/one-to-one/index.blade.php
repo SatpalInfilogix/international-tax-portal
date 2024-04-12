@@ -31,8 +31,8 @@
                                 <th class="px-4 py-2 border">Country</th>
                                 <th class="px-4 py-2 bg-gray-10 border">Advisor</th>
                                 <th class="px-4 py-2 bg-gray-10 border">Data Submitted</th>
+                                <th class="px-4 py-2 bg-gray-10 border">Status</th>
                                 <th class="px-4 py-2 bg-gray-10 border">Action</th>
-                                <th class="px-4 py-2 bg-gray-10 border">Resolved</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,33 +41,19 @@
                                 <td class="px-4 py-2 border">Admin</td>
                                 <td class="px-4 py-2 border">2021-05-14</td>
                                 <td class="px-4 py-2 border">
+                                    <select name="resolved" class= "border-gray-300 focus:border-gray-300 focus:ring-gray-300 rounded-md shadow-sm py-1 mr-2">
+                                        <option value="Open">Open</option>
+                                        <option value="Closed">Closed</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                    </select>
+                                </td>
+                                <td class="px-4 py-2 border">
                                     <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">{{ __('View'
                                     ) }}</button>
-                                </td>
-                                <td class="px-4 py-2 border">
-                                    <select name="resolved" class= "border-gray-300 focus:border-gray-300 focus:ring-gray-300 rounded-md shadow-sm py-1 mr-2">
-                                        <option value="Open">Open</option>
-                                        <option value="Closed">Closed</option>
-                                        <option value="Cancelled">Cancelled</option>
-                                    </select>
                                     <button class="rounded-full text-sm px-2 py-1 text-white bg-red-500 border-red-600">Delete</button>
+
                                 </td>
-                            </tr>
-                            <tr>
-                                <td class="px-4 py-2 border">Test</td>
-                                <td class="px-4 py-2 border">Admin</td>
-                                <td class="px-4 py-2 border">2021-05-14</td>
-                                <td class="px-4 py-2 border">
-                                    <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">{{ __('View') }}</button>
-                                </td>
-                                <td class="px-4 py-2 border">
-                                    <select name="resolved" class= "border-gray-300 focus:border-gray-300 focus:ring-gray-300 rounded-md shadow-sm py-1 mr-2">
-                                        <option value="Open">Open</option>
-                                        <option value="Closed">Closed</option>
-                                        <option value="Cancelled">Cancelled</option>
-                                    </select>
-                                    <button class="rounded-full text-sm px-2 py-1 text-white bg-red-500 border-red-600">Delete</button>
-                                </td>
+                                
                             </tr>
                         </tbody>
                     </table>
@@ -86,8 +72,8 @@
                                 <th class="px-4 py-2 border">Country</th>
                                 <th class="px-4 py-2 bg-gray-10 border">Advisor</th>
                                 <th class="px-4 py-2 bg-gray-10 border">Date Submitted</th>
+                                <th class="px-4 py-2 bg-gray-10 border">Status</th>
                                 <th class="px-4 py-2 bg-gray-10 border">Action</th>
-                                <th class="px-4 py-2 bg-gray-10 border">Resolved</th>
                             </tr>
                         </thead>
                         <tbody></tbody>

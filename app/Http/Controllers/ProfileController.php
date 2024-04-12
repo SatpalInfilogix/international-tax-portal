@@ -89,8 +89,8 @@ class ProfileController extends Controller
                 'company_description'      => $request->company_description,
                 'company_year_established' => $request->company_year_established,
                 'company_website'          => $request->company_website,
-                'company_logo'             => isset($filename) ? 'uploads/company_logo/'. $filename : $oldLogo,
-                'headshot_path'            => isset($headshotFilename) ? 'uploads/headshot_upload/'. $headshotFilename : $oldHeadshotFile,
+                'company_logo'             => isset($filename) ? 'uploads/company-logo/'. $filename : $oldLogo,
+                'headshot_path'            => isset($headshotFilename) ? 'uploads/headshots/'. $headshotFilename : $oldHeadshotFile,
                 'bio'                      => $request->company_bio,
             ]);
 

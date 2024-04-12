@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\OneToOne;
 use Illuminate\Http\Request;
+use App\Models\UserAdditionalData;
+use Illuminate\Support\Facades\Auth;
 
 class OneToOneController extends Controller
 {
@@ -12,7 +14,11 @@ class OneToOneController extends Controller
      */
     public function index()
     {
-        return view('one-to-one.index');
+        $countries = UserAdditionalData::select('country')->distinct()->get();
+
+        return view('one-to-one.index', [
+            'countries' => $countries
+        ]);
     }
 
     /**
@@ -28,7 +34,20 @@ class OneToOneController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        foreach ($request->advisors as $advisor) {
+            OneToOne::create([
+                'introducer_id' => Auth::id(),
+                'advisor_id' => $advisor,
+                'date'       => $request->date,
+                'time'       => $request->time,
+                'request_message' => $request->personal_notes
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'One to one request has been sent successfuly!'
+        ]);
     }
 
     /**

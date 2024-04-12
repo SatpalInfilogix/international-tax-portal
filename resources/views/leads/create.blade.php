@@ -231,10 +231,12 @@
                         required: true
                     },
                     client_email: {
-                        required: true
+                        required: true,
+                        email: true
                     },
                     phone_number: {
                         required: true,
+                        number: true,
                         minlength: 10,
                         maxlength: 10
                     },
@@ -243,7 +245,9 @@
                     },
                     background: {
                         required: true
-                    }
+                    },
+                    "member[]": "required",
+
                 },
                 messages: {
                     country: {
@@ -269,6 +273,8 @@
                     background: {
                         required: "Please enter background"
                     },
+                    "member[]": ""
+
                 },
                 highlight: function(element) {
                     $(element).removeClass(
