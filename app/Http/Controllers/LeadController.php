@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lead;
+use App\Models\LeadAdvisior;
 use Illuminate\Http\Request;
 use App\Models\UserAdditionalData;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class LeadController extends Controller
 {
@@ -13,7 +16,18 @@ class LeadController extends Controller
      */
     public function index()
     {
-        return view('leads.index');
+        $sentLeads = Lead::where('introducer_id', Auth::id())->latest()->get();
+        $receivedLeads = LeadAdvisior::where('advisior_id', Auth::id())->latest()->get();
+        foreach($receivedLeads as $key => $receivedLead)
+        {
+            $receivedLeads[$key]['client_name'] = Lead::where('id', $receivedLead->lead_id)->pluck('client_name')->first();
+        }
+
+        $sendLeadsArray = json_decode(json_encode($sentLeads));
+        $receivedLeadsArray = json_decode(json_encode($receivedLeads));
+
+        $allLeads = array_merge($sendLeadsArray,  $receivedLeadsArray);
+        return view('leads.index', compact('sentLeads', 'receivedLeads', 'allLeads'));
     }
 
     /**
@@ -33,7 +47,31 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-        print_r($request->all());
+        $lead = Lead::create([
+            'introducer_id'     => Auth::id(),
+            'client_name'       => $request->client_name,
+            'client_email'      => $request->client_email,
+            'client_phoneno'    => $request->phone_number,
+            'when_to_contact'   => $request->when_to_connect,
+            'background'        => $request->background,
+            'services'          => implode(',',$request->services),
+            'country'           => $request->country
+        ]);
+
+        if($lead) {
+            $members = $request->member;
+            if ($members && count($members) > 0) {
+                foreach($members as $key => $value)
+                {
+                    LeadAdvisior::create([
+                        'lead_id'       => $lead->id,
+                        'advisior_id'   => $value
+                    ]);
+                }
+            }
+        }
+
+        return Redirect::route("leads.index")->with('success-message','Leads Created Successfully.');
     }
 
     /**

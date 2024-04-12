@@ -26,24 +26,17 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($allLeads as $key => $lead)
                             <tr>
-                                <td class="px-4 py-2 border">Sachin</td>
-                                <td class="px-4 py-2 border">Admin</td>
-                                <td class="px-4 py-2 border">2021-05-14</td>
+                                <td class="px-4 py-2 border">{{ $lead->client_name }}</td>
+                                <td class="px-4 py-2 border">{{ Auth::user()->name }}</td>
+                                <td class="px-4 py-2 border">{{  Carbon\Carbon::parse($lead->created_at)->format('d M, Y') }}</td>
                                 <td class="px-4 py-2 border">
                                     <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">Open</button>
                                     <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Delete</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="px-4 py-2 border">Test</td>
-                                <td class="px-4 py-2 border">Admin</td>
-                                <td class="px-4 py-2 border">2021-05-14</td>
-                                <td class="px-4 py-2 border">
-                                    <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Open</button>
-                                    <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Delete</button>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -64,7 +57,19 @@
                                 <th class="px-4 py-2 bg-gray-10 border">Action</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                            @foreach($receivedLeads as $key => $lead)
+                            <tr>
+                                <td class="px-4 py-2 border">{{ $lead->client_name }}</td>
+                                <td class="px-4 py-2 border">{{ Auth::user()->name }}</td>
+                                <td class="px-4 py-2 border">{{ ($lead->created_at)->format('d M,Y')}}</td>
+                                <td class="px-4 py-2 border">
+                                    <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Open</button>
+                                    <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Delete</button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -84,16 +89,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($sentLeads as $key => $lead)
                             <tr>
-                                <td class="px-4 py-2 border">Sachin</td>
-                                <td class="px-4 py-2 border">Admin</td>
-                                <td class="px-4 py-2 border">2021-05-14</td>
+                                <td class="px-4 py-2 border">{{ $lead->client_name }}</td>
+                                <td class="px-4 py-2 border">{{ Auth::user()->name }}</td>
+                                <td class="px-4 py-2 border">{{ ($lead->created_at)->format('d M,Y')}}</td>
                                 <td class="px-4 py-2 border">
                                     <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Open</button>
                                     <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Delete</button>
                                 </td>
                             </tr>
-                            <tr>
+                            @endforeach
+                            {{-- <tr>
                                 <td class="px-4 py-2 border">Test</td>
                                 <td class="px-4 py-2 border">Admin</td>
                                 <td class="px-4 py-2 border">2021-05-14</td>
@@ -101,7 +108,7 @@
                                     <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Open</button>
                                     <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Delete</button>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
                 </div>

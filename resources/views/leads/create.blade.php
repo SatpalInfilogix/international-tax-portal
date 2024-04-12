@@ -8,6 +8,7 @@
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                 <form action="{{ route('leads.store') }}" name="create-lead" method="post">
+                    @csrf
                     <div class="grid grid-cols-2 gap-4">
                         <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                             <h2 class="text-lg font-medium text-gray-900 mb-4">{{ __('Client Information') }}</h2>
@@ -26,7 +27,7 @@
                             <div class="pb-3">
                                 <x-input-label for="introducer" :value="__('Introducer')" />
                                 <x-text-input id="introducer" name="introducer" type="text"
-                                    class="mt-1 block w-full" />
+                                    class="mt-1 block w-full" value="{{ Auth::user()->name }}" readonly />
                             </div>
 
                             <div class="pb-3">
@@ -63,7 +64,7 @@
                             <div class="grid grid-cols-3 gap-2">
                                 <div>
                                     <label for="income_tax" class="inline-flex items-center">
-                                        <input id="income_tax" name="services[]" type="checkbox"
+                                        <input id="income_tax" name="services[]" value="Income Tax" type="checkbox"
                                             class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500" />
                                         <span class="ms-2 text-sm text-gray-600">{{ __('Income Tax') }}</span>
                                     </label>
@@ -71,7 +72,7 @@
 
                                 <div>
                                     <label for="company_tax" class="inline-flex items-center">
-                                        <input id="company_tax" name="services[]" type="checkbox"
+                                        <input id="company_tax" name="services[]" value="Company Tax" type="checkbox"
                                             class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500" />
                                         <span class="ms-2 text-sm text-gray-600">{{ __('Company Tax') }}</span>
                                     </label>
@@ -79,7 +80,7 @@
 
                                 <div>
                                     <label for="indirect_tax" class="inline-flex items-center">
-                                        <input id="indirect_tax"name="services[]" type="checkbox"
+                                        <input id="indirect_tax"name="services[]" value="Indirect Tax" type="checkbox"
                                             class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500" />
                                         <span class="ms-2 text-sm text-gray-600">{{ __('Indirect Tax') }}</span>
                                     </label>
@@ -87,7 +88,7 @@
 
                                 <div>
                                     <label for="private_client" class="inline-flex items-center">
-                                        <input id="private_client" name="services[]" type="checkbox"
+                                        <input id="private_client" name="services[]" value="Private Client" type="checkbox"
                                             class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500" />
                                         <span class="ms-2 text-sm text-gray-600">{{ __('Private Client') }}</span>
                                     </label>
@@ -95,7 +96,7 @@
 
                                 <div>
                                     <label for="estate_tax" class="inline-flex items-center">
-                                        <input id="estate_tax" name="services[]" type="checkbox"
+                                        <input id="estate_tax" name="services[]" value="Estate Tax" type="checkbox"
                                             class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500" />
                                         <span class="ms-2 text-sm text-gray-600">{{ __('Estate Tax') }}</span>
                                     </label>
@@ -103,7 +104,7 @@
 
                                 <div>
                                     <label for="bespoke_advice" class="inline-flex items-center">
-                                        <input id="bespoke_advice" name="services[]" type="checkbox"
+                                        <input id="bespoke_advice" name="services[]" value="Bespoke Advice" type="checkbox"
                                             class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500" />
                                         <span class="ms-2 text-sm text-gray-600">{{ __('Bespoke Advice') }}</span>
                                     </label>
@@ -137,7 +138,7 @@
                             </div>
 
                             <div class="members-list">
-                               
+
                             </div>
                         </div>
                     </div>
@@ -153,12 +154,10 @@
                     url: `{{ url('get-members-by-country') }}/${ $(this).val() }`,
                     method: 'GET',
                     success: function(response) {
-                        console.log('..', response);
-
                         let html = ``;
 
                         for(let i=0; i<response.length; i++){
-                            console.log(response[i]);
+                            console.log(response[i].id);
 
                             html += ` <div class="flex items-center mt-2">
                                 <div class="w-full bg-white">
@@ -177,10 +176,10 @@
                                                 <img src="http://127.0.0.1:8000/assets/icons/users-group.png" alt="" class="w-20">
                                             </div>
                                         </div>`;
-                                        
+
                                         if(response[i].areas_of_expertise){
                                             let expertises = response[i].areas_of_expertise.split(', ');
-                                            console.log('..', expertises)
+                                            // console.log('..', expertises)
                                             let expertisesHtml = ``;
 
                                             for(let j = 0; j < expertises.length; j++){
@@ -189,19 +188,19 @@
                                                     ${expertises[j]}
                                                 </div>`;
                                             }
-                                            
+
                                             html += `<div class="flex flex-wrap my-2">${expertisesHtml}</div>`;
                                         }
 
                                     html += `</div> 
                                 </div>
                                 <div class="w-20 text-center">
-                                    <input type="checkbox" name="member[]" class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
+                                    <input type="checkbox" name="member[]" value=${response[i].id} class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
                                 </div>
                             </div>`;
                         }
-                        
-                        $('.members-list').append(html);
+
+                        $('.members-list').html(html);
 
                         if (response.length > 0) {
                             $('.available-members').removeClass('hidden');
@@ -210,7 +209,7 @@
                         }
                     }
                 })
-                console.log($(this).val())
+                // console.log($(this).val())
             })
 
             $("form[name='create-lead']").validate({
