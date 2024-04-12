@@ -31,13 +31,7 @@
             </div>
         </div>
 
-        <iframe width="600" height="450" style="border:0" loading="lazy" allowfullscreen
-            referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps/embed/v1/place?key=API_KEY
-    &q=Space+Needle,Seattle+WA">
-        </iframe>
-
-
+        <div id="map" class="mt-2" style="min-height: 500px;" data-countries="{{ json_encode($countries) }}"></div>
 
         <div class="py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
             @foreach ($members as $member)
@@ -70,7 +64,54 @@
                 <p class="text-gray-700 text-sm">(San infi)</p>
             </div> -->
         </div>
-
-
     </div>
+
+    <script>
+        function initMap() {
+            var latlng = new google.maps.LatLng(-25.92, 151.25); // default location
+
+            var myOptions = {
+                zoom: 1,
+                center: latlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                mapTypeControl: false
+            };
+
+            var map = new google.maps.Map(document.getElementById('map'), myOptions);
+
+            var infowindow = new google.maps.InfoWindow(),
+                marker, lat, lng;
+
+            var json = JSON.parse($('[data-countries]').attr('data-countries'));
+
+            for (var o in json) {
+                lat = json[o].country_detail.latitude;
+                lng = json[o].country_detail.longitude;
+                name = json[o].country;
+
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(lat, lng),
+                    name: name,
+                    map: map,
+                    title: name
+                });
+
+                google.maps.event.addListener(marker, 'click', function(e) {
+                    let country_name = this.name;
+                    console.log('country_name', country_name)
+
+                    $.ajax({
+                        url: `{{ url('get-members-by-country') }}/${country_name}`,
+                        method: "GET",
+                        success:function(response){
+                            console.log(response)
+                        }
+                    })
+                }.bind(marker));
+            }
+        }
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_API_KEY') }}&callback=initMap">
+    </script>
 </x-app-layout>
