@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class LeadAdvisior extends Model
+class LeadAdvisor extends Model
 {
     use HasFactory;
     protected $guarded = [];
@@ -13,8 +13,8 @@ class LeadAdvisior extends Model
     /**
      * Join advisor with users table
      */
-    public function advisor(): HasOne
+    public function introducer(): HasOne
     {
-        return $this->hasOne(User::class, 'id', 'advisor_id');
+        return $this->hasOne(User::class, 'id', 'introducer_id');
     }
 }

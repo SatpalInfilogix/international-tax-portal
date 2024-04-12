@@ -14,7 +14,11 @@ class ExpertiseController extends Controller
      */
     public function index()
     {
-        $countries = UserAdditionalData::select('country')->distinct()->get();
+        $countries = UserAdditionalData::select('country')
+            ->orderBy('country', 'ASC')
+            ->distinct()
+            ->get();
+            
         $sent_requests = Expertise::where('introducer_id', Auth::id())
             ->with('advisor')
             ->get();

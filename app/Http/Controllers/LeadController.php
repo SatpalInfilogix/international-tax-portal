@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lead;
-use App\Models\LeadAdvisior;
+use App\Models\LeadAdvisor;
 use Illuminate\Http\Request;
 use App\Models\UserAdditionalData;
 use Illuminate\Support\Facades\Auth;
@@ -20,8 +20,8 @@ class LeadController extends Controller
             ->latest()
             ->get();
 
-        $receivedLeads = LeadAdvisior::where('advisor_id', Auth::id())
-            ->with('advisor')
+        $receivedLeads = LeadAdvisor::where('advisor_id', Auth::id())
+            ->with('introducer')
             ->latest()
             ->get();
         /* foreach($receivedLeads as $key => $receivedLead)
@@ -45,7 +45,10 @@ class LeadController extends Controller
      */
     public function create(Request $request)
     {
-        $countries = UserAdditionalData::select('country')->distinct()->get();;
+        $countries = UserAdditionalData::select('country')
+            ->orderBy('country', 'ASC')
+            ->distinct()
+            ->get();
 
         return view('leads.create', [
             'countries' => $countries
@@ -71,11 +74,12 @@ class LeadController extends Controller
         if($lead) {
             $members = $request->member;
             if ($members && count($members) > 0) {
-                foreach($members as $key => $value)
-                {
-                    LeadAdvisior::create([
+
+                foreach($members as $advisor_id) {
+                    LeadAdvisor::create([
                         'lead_id'       => $lead->id,
-                        'advisor_id'   => $value
+                        'introducer_id' => Auth::id(),
+                        'advisor_id'    => $advisor_id
                     ]);
                 }
             }
