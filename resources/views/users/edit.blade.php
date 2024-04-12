@@ -75,7 +75,9 @@
             });
         });
 
-        function previewFile(input) {
+        $('#preview-logo').addClass('hidden');
+        $('#preview-headshot').addClass('hidden');
+        function logoPreviewFile(input) {
             var file = $("#logo_upload").get(0).files[0];
             if (file) {
                 $('#preview-logo').removeClass('hidden');
@@ -88,7 +90,7 @@
             }
         }
 
-        function previewPdf(input) {
+        function headshotPreviewPdf(input) {
             var file = $("#headshot_upload").get(0).files[0];
             if (file) {
                 $('#preview-headshot').removeClass('hidden');
