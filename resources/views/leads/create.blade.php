@@ -132,7 +132,7 @@
                                     <p>Country Members</p>
                                 </div>
                                 <div class="w-20">
-                                    <p>Select all</p>
+                                    <p class="select-all cursor-default">Select all</p>
                                 </div>
                             </div>
 
@@ -148,6 +148,14 @@
 
     <script>
         $(function() {
+            $('.select-all').click(function(){
+                if ($('[name="member[]"]:checked').length > 0) {
+                    $('[name="member[]"]').prop('checked',false);
+                } else {
+                    $('[name="member[]"]').prop('checked', true);
+                }       
+            })
+
             $('[name="country"]').change(function() {
                 $.ajax({
                     url: `{{ url('get-members-by-country') }}/${ $(this).val() }`,

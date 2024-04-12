@@ -16,12 +16,22 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $sentLeads = Lead::where('introducer_id', Auth::id())->latest()->get();
-        $receivedLeads = LeadAdvisior::where('advisior_id', Auth::id())->latest()->get();
-        foreach($receivedLeads as $key => $receivedLead)
+        $sentLeads = Lead::where('introducer_id', Auth::id())
+            ->latest()
+            ->get();
+
+        $receivedLeads = LeadAdvisior::where('advisor_id', Auth::id())
+            ->with('advisor')
+            ->latest()
+            ->get();
+        /* foreach($receivedLeads as $key => $receivedLead)
         {
             $receivedLeads[$key]['client_name'] = Lead::where('id', $receivedLead->lead_id)->pluck('client_name')->first();
-        }
+        } */
+
+        echo '<pre>';
+        print_r($receivedLeads);
+        die();
 
         $sendLeadsArray = json_decode(json_encode($sentLeads));
         $receivedLeadsArray = json_decode(json_encode($receivedLeads));
@@ -54,7 +64,7 @@ class LeadController extends Controller
             'client_phoneno'    => $request->phone_number,
             'when_to_contact'   => $request->when_to_connect,
             'background'        => $request->background,
-            'services'          => implode(',',$request->services),
+            'services'          => $request->services ? implode(',',$request->services) : '',
             'country'           => $request->country
         ]);
 
@@ -65,7 +75,7 @@ class LeadController extends Controller
                 {
                     LeadAdvisior::create([
                         'lead_id'       => $lead->id,
-                        'advisior_id'   => $value
+                        'advisor_id'   => $value
                     ]);
                 }
             }
