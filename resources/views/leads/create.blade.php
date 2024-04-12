@@ -56,8 +56,7 @@
 
                             <div class="pb-3">
                                 <x-input-label for="background" :value="__('Background')" />
-                                <x-text-area id="background" name="background" type="text"
-                                    class="mt-1 block w-full" />
+                                <x-text-area id="background" name="background" class="mt-1 block w-full" />
                             </div>
 
                             <h2 class="text-lg font-medium text-gray-900 mb-4">{{ __('Service requirements') }}</h2>

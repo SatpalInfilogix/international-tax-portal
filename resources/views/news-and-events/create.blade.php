@@ -38,8 +38,7 @@
 
                             <div class="pb-3">
                                 <x-input-label for="name" :value="__('Text')" />
-                                <x-text-area id="name" name="text" type="text" class="mt-1 block w-full"
-                                    autofocus />
+                                <x-text-area id="name" name="text" class="mt-1 block w-full" />
                             </div>
 
                             <div class="buttons-container mt-4">

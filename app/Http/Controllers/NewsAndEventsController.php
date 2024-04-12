@@ -93,7 +93,7 @@ class NewsAndEventsController extends Controller
             }
         }
 
-        $newsAndEvents = NewsAndEvents::findOrFail($id)->update([
+        NewsAndEvents::findOrFail($id)->update([
             'title' => $request->title,
             'image' =>  isset($filename) ? 'uploads/news-and-events/'. $filename : $oldImage,
             'url'   => $request->url,
@@ -108,11 +108,11 @@ class NewsAndEventsController extends Controller
      */
     public function destroy(NewsAndEvents $newsAndEvents, $id)
     {
-        $newsAndEvents = NewsAndEvents::findOrFail($id)->delete();
+        NewsAndEvents::findOrFail($id)->delete();
 
         return response()->json([
             'success' => true,
-            'message' => 'record delete successfully.'
+            'message' => 'News/event deleted successfully.'
         ]);
     }
 }

@@ -21,7 +21,6 @@ class ExpertiseController extends Controller
 
         $received_requests = Expertise::where('advisor_id', Auth::id())
             ->with('introducer')
-            ->with('advisor')
             ->get();
 
         return view('expertise.index', [
@@ -79,8 +78,15 @@ class ExpertiseController extends Controller
      */
     public function update(Request $request, Expertise $expertise)
     {
-        print_r($request->all());
-        print_r($expertise);
+        Expertise::where('id', $request->expertise_id)
+            ->update([
+                'reply_message' => $request->reply_message
+            ]); 
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Reply sent successfully.'
+        ]);
     }
 
     /**

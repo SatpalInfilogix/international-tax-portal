@@ -35,7 +35,9 @@
 
     <!-- JQuery form validation -->
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <!-- Sweetalert -->
+    <script src="{{ asset('assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
 </head>
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">

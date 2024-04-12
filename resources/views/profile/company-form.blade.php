@@ -85,6 +85,6 @@
 
 <div>
     <x-input-label for="company_bio" :value="__('Bio')" />
-    <x-text-area id="company_bio" name="company_bio" type="text" class="mt-1 block w-full"
+    <x-text-area id="company_bio" name="company_bio" class="mt-1 block w-full"
         :value="old('company_bio', $userAdditionalData->bio ?? '')" />
 </div>
