@@ -29,6 +29,7 @@ class LeadController extends Controller
         $receivedLeadsArray = json_decode(json_encode($receivedLeads));
 
         $allLeads = array_merge($sendLeadsArray,  $receivedLeadsArray);
+
         return view('leads.index', compact('sentLeads', 'receivedLeads', 'allLeads'));
     }
 
@@ -109,6 +110,13 @@ class LeadController extends Controller
      */
     public function destroy(Lead $lead)
     {
-        //
+        $leadAdvisor = LeadAdvisor::where('lead_id', $lead->id)->get();
+
+        $sentLeads = Lead::where('id', $lead->id)->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Lead has been successfully deleted.'
+        ]);
     }
 }
