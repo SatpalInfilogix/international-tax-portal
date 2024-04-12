@@ -21,17 +21,9 @@ class LeadController extends Controller
             ->get();
 
         $receivedLeads = LeadAdvisor::where('advisor_id', Auth::id())
-            ->with('introducer')
+            ->with('lead', 'advisor', 'introducer')
             ->latest()
             ->get();
-        /* foreach($receivedLeads as $key => $receivedLead)
-        {
-            $receivedLeads[$key]['client_name'] = Lead::where('id', $receivedLead->lead_id)->pluck('client_name')->first();
-        } */
-
-        echo '<pre>';
-        print_r($receivedLeads);
-        die();
 
         $sendLeadsArray = json_decode(json_encode($sentLeads));
         $receivedLeadsArray = json_decode(json_encode($receivedLeads));
