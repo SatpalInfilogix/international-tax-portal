@@ -12,7 +12,12 @@
                 </button>
             </div>
 
-            <form action="{{ route('expertise.index') }}" name="view-expertise-request" method="POST">
+            <form action="{{ route('expertise.index') }}" name="update-expertise-request" method="POST">
+                @csrf
+                @method('patch')
+
+                <input type="hidden" name="expertise_id">
+
                 <div class="p-4 overflow-y-auto">
                     <div class="mb-2">
                         <x-input-label for="country" :value="__('Country')" />
@@ -27,14 +32,25 @@
 
                     <div class="mb-2">
                         <x-input-label for="advisor_name" :value="__('Memeber')" />
-                        <x-text-input id="advisor_name" name="advisor_name" type="text"
-                            class="mt-1 block w-full" disabled />
+                        <x-text-input id="advisor_name" name="advisor_name" type="text" class="mt-1 block w-full"
+                            disabled />
                     </div>
 
-                    <div>
+                    <div class="mb-2">
                         <x-input-label for="request_message" :value="__('Request')" />
-                        <x-text-area id="request_message" name="request_message" type="text"
-                            class="mt-1 block w-full" disabled />
+                        <x-text-area id="request_message" name="request_message" class="mt-1 block w-full" disabled />
+                    </div>
+
+                    <div class="reply-message-container hidden">
+                        <div>
+                            <x-input-label for="reply_message" :value="__('Reply')" />
+                            <x-text-area id="reply_message" name="reply_message" class="mt-1 block w-full" />
+                        </div>
+                        <div class="flex items-center py-3">
+                            <x-primary-button>
+                                Update
+                            </x-primary-button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -45,12 +61,90 @@
 
 <script>
     $(function() {
-        $('[data-modal-trigger]').click(function() {
+        $('[data-modal-trigger="view-expertise-request"]').click(function() {
             let expertise_detail = $(this).data('detail');
 
-            $('[name="view-expertise-request"] [name="country"]').val(expertise_detail.advisor.country);
-            $('[name="view-expertise-request"] [name="advisor_name"]').val(expertise_detail.advisor.name);
-            $('[name="view-expertise-request"] [name="request_message"]').val(expertise_detail.request_message);
+            $('[name="reply_message"]').parent().find('.error').remove();
+            $('[name="reply_message"]').removeClass('border-red-600 border-green-600 focus:border-red-500 focus:ring-red-500')
+            $('[name="reply_message"]').addClass('border-gray-300 focus:border-green-500 focus:ring-green-500');
+
+            let country = ``;
+            let advisor_name = ``;
+            if (expertise_detail.advisor) {
+                country = expertise_detail.advisor.country;
+                advisor_name = expertise_detail.advisor.name;
+
+                if(expertise_detail.reply_message){
+                    $('.reply-message-container').removeClass('hidden');
+                    
+                } else{
+                    $('.reply-message-container').addClass('hidden');
+                }
+            } else {
+                country = expertise_detail.introducer.country;
+                advisor_name = expertise_detail.introducer.name;
+                $('.reply-message-container').removeClass('hidden');
+            }
+
+            if(expertise_detail.reply_message){
+                $('[name="update-expertise-request"] [type="submit"]').addClass('hidden');
+                $('[name="update-expertise-request"] [name="reply_message"]').attr('disabled', 'disabled');
+            } else{
+                $('[name="update-expertise-request"] [type="submit"]').removeClass('hidden');
+                $('[name="update-expertise-request"] [name="reply_message"]').removeAttr('disabled');
+            }
+
+            let request_message = expertise_detail.request_message;
+
+            $('[name="update-expertise-request"] [name="expertise_id"]').val(expertise_detail.id);
+            $('[name="update-expertise-request"] [name="country"]').val(country);
+            $('[name="update-expertise-request"] [name="advisor_name"]').val(advisor_name);
+            $('[name="update-expertise-request"] [name="request_message"]').val(expertise_detail.request_message);
+            $('[name="update-expertise-request"] [name="reply_message"]').val(expertise_detail.reply_message);
+        })
+
+        $('[name="update-expertise-request"]').validate({
+            rules: {
+                reply_message: "required",
+            },
+            messages: {
+                reply_message: "Please enter reply",
+            },
+            highlight: function(element) {
+                $(element).removeClass(
+                    'border-gray-300 focus:border-green-500 focus:ring-green-500')
+                $(element).addClass('border-red-600 focus:border-red-500 focus:ring-red-500')
+            },
+            unhighlight: function(element) {
+                $(element).removeClass(
+                    'border-gray-300 border-red-600 focus:border-red-500 focus:ring-red-500')
+                $(element).addClass('border-green-600 focus:border-green-500 focus:ring-green-500')
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: `{{ url('expertise') }}/${$('[name="expertise_id"]').val()}`,
+                    type: form.method,
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        if(response.success){
+                            $(`#overlay`).addClass('hidden');
+                            $('[data-modal="create-new-expertise-request"]').addClass('hidden');
+                                
+                            swal({
+                                title: "Success!",
+                                text: "Expertise request sent successfully!",
+                                icon: "success",
+                                buttons: false,
+                                timer: 2000
+                            });
+                            
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000);
+                        }
+                    }
+                })
+            }
         })
     })
 </script>

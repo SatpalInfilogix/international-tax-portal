@@ -68,8 +68,7 @@
                     </div>
                     <div>
                         <x-input-label for="personal_notes" :value="__('Personal Notes')" />
-                        <x-text-area id="personal_notes" name="personal_notes" type="text"
-                            class="mt-1 block w-full" />
+                        <x-text-area id="personal_notes" name="personal_notes" class="mt-1 block w-full" />
                     </div>
                 </div>
                 <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">

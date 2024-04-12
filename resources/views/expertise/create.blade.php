@@ -33,7 +33,7 @@
 
                     <div>
                         <x-input-label for="request_message" :value="__('Request')" />
-                        <x-text-area id="request_message" name="request_message" type="text" class="mt-1 block w-full" />
+                        <x-text-area id="request_message" name="request_message" class="mt-1 block w-full" />
                     </div>
                 </div>
                 <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">

@@ -56,8 +56,7 @@
 
                             <div class="pb-3">
                                 <x-input-label for="background" :value="__('Background')" />
-                                <x-text-area id="background" name="background" type="text"
-                                    class="mt-1 block w-full" />
+                                <x-text-area id="background" name="background" class="mt-1 block w-full" />
                             </div>
 
                             <h2 class="text-lg font-medium text-gray-900 mb-4">{{ __('Service requirements') }}</h2>
@@ -133,7 +132,7 @@
                                     <p>Country Members</p>
                                 </div>
                                 <div class="w-20">
-                                    <p>Select all</p>
+                                    <p class="select-all cursor-default">Select all</p>
                                 </div>
                             </div>
 
@@ -149,6 +148,14 @@
 
     <script>
         $(function() {
+            $('.select-all').click(function(){
+                if ($('[name="member[]"]:checked').length > 0) {
+                    $('[name="member[]"]').prop('checked',false);
+                } else {
+                    $('[name="member[]"]').prop('checked', true);
+                }       
+            })
+
             $('[name="country"]').change(function() {
                 $.ajax({
                     url: `{{ url('get-members-by-country') }}/${ $(this).val() }`,

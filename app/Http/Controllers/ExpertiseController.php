@@ -14,14 +14,17 @@ class ExpertiseController extends Controller
      */
     public function index()
     {
-        $countries = UserAdditionalData::select('country')->distinct()->get();
+        $countries = UserAdditionalData::select('country')
+            ->orderBy('country', 'ASC')
+            ->distinct()
+            ->get();
+            
         $sent_requests = Expertise::where('introducer_id', Auth::id())
             ->with('advisor')
             ->get();
 
         $received_requests = Expertise::where('advisor_id', Auth::id())
             ->with('introducer')
-            ->with('advisor')
             ->get();
 
         return view('expertise.index', [
@@ -79,8 +82,15 @@ class ExpertiseController extends Controller
      */
     public function update(Request $request, Expertise $expertise)
     {
-        print_r($request->all());
-        print_r($expertise);
+        Expertise::where('id', $request->expertise_id)
+            ->update([
+                'reply_message' => $request->reply_message
+            ]); 
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Reply sent successfully.'
+        ]);
     }
 
     /**

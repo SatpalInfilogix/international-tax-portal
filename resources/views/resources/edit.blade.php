@@ -43,7 +43,7 @@
 
                         <div class="mb-3">
                             <x-input-label for="name" :value="__('Rich text')" />
-                            <x-text-area id="name" name="rich_text" type="text" class="mt-1 block w-full" :value="old('title', $resource->rich_text)"/>
+                            <x-text-area id="name" name="rich_text" class="mt-1 block w-full" :value="old('title', $resource->rich_text)"/>
                         </div>
 
                         <div class="buttons-container mt-4">

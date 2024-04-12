@@ -28,8 +28,8 @@
                         <tbody>
                             @foreach($allLeads as $key => $lead)
                             <tr>
-                                <td class="px-4 py-2 border">{{ $lead->client_name }}</td>
-                                <td class="px-4 py-2 border">{{ Auth::user()->name }}</td>
+                                <td class="px-4 py-2 border">{{ $lead->lead->client_name ?? $lead->client_name }}</td>
+                                <td class="px-4 py-2 border">{{ $lead->introducer->name ??  Auth::user()->name }}</td>
                                 <td class="px-4 py-2 border">{{  Carbon\Carbon::parse($lead->created_at)->format('d M, Y') }}</td>
                                 <td class="px-4 py-2 border">
                                     <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">Open</button>
@@ -60,7 +60,7 @@
                         <tbody>
                             @foreach($receivedLeads as $key => $lead)
                             <tr>
-                                <td class="px-4 py-2 border">{{ $lead->client_name }}</td>
+                                <td class="px-4 py-2 border">{{ $lead->lead->client_name ?? $lead->client_name }}</td>
                                 <td class="px-4 py-2 border">{{ Auth::user()->name }}</td>
                                 <td class="px-4 py-2 border">{{ ($lead->created_at)->format('d M,Y')}}</td>
                                 <td class="px-4 py-2 border">

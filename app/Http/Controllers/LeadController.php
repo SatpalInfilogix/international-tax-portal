@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lead;
-use App\Models\LeadAdvisior;
+use App\Models\LeadAdvisor;
 use Illuminate\Http\Request;
 use App\Models\UserAdditionalData;
 use Illuminate\Support\Facades\Auth;
@@ -16,12 +16,14 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $sentLeads = Lead::where('introducer_id', Auth::id())->latest()->get();
-        $receivedLeads = LeadAdvisior::where('advisior_id', Auth::id())->latest()->get();
-        foreach($receivedLeads as $key => $receivedLead)
-        {
-            $receivedLeads[$key]['client_name'] = Lead::where('id', $receivedLead->lead_id)->pluck('client_name')->first();
-        }
+        $sentLeads = Lead::where('introducer_id', Auth::id())
+            ->latest()
+            ->get();
+
+        $receivedLeads = LeadAdvisor::where('advisor_id', Auth::id())
+            ->with('lead', 'advisor', 'introducer')
+            ->latest()
+            ->get();
 
         $sendLeadsArray = json_decode(json_encode($sentLeads));
         $receivedLeadsArray = json_decode(json_encode($receivedLeads));
@@ -35,7 +37,10 @@ class LeadController extends Controller
      */
     public function create(Request $request)
     {
-        $countries = UserAdditionalData::select('country')->distinct()->get();;
+        $countries = UserAdditionalData::select('country')
+            ->orderBy('country', 'ASC')
+            ->distinct()
+            ->get();
 
         return view('leads.create', [
             'countries' => $countries
@@ -54,18 +59,19 @@ class LeadController extends Controller
             'client_phoneno'    => $request->phone_number,
             'when_to_contact'   => $request->when_to_connect,
             'background'        => $request->background,
-            'services'          => implode(',',$request->services),
+            'services'          => $request->services ? implode(',',$request->services) : '',
             'country'           => $request->country
         ]);
 
         if($lead) {
             $members = $request->member;
             if ($members && count($members) > 0) {
-                foreach($members as $key => $value)
-                {
-                    LeadAdvisior::create([
+
+                foreach($members as $advisor_id) {
+                    LeadAdvisor::create([
                         'lead_id'       => $lead->id,
-                        'advisior_id'   => $value
+                        'introducer_id' => Auth::id(),
+                        'advisor_id'    => $advisor_id
                     ]);
                 }
             }
