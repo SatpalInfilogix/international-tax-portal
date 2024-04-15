@@ -32,7 +32,9 @@
                                 <td class="px-4 py-2 border">{{ $lead->introducer->name ??  Auth::user()->name }}</td>
                                 <td class="px-4 py-2 border">{{  Carbon\Carbon::parse($lead->created_at)->format('d M, Y') }}</td>
                                 <td class="px-4 py-2 border">
-                                    <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">Open</button>
+
+                                    <a href="{{ route('leads.show', $lead->id )}}" class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">View</a>
+                                    {{-- <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">Open</button> --}}
                                     <button data-id="{{ $lead->lead->id ?? $lead->id }}"
                                         class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 confirm-delete">Delete</button>
                                 </td>
@@ -65,7 +67,9 @@
                                 <td class="px-4 py-2 border">{{ Auth::user()->name }}</td>
                                 <td class="px-4 py-2 border">{{ ($lead->created_at)->format('d M,Y')}}</td>
                                 <td class="px-4 py-2 border">
-                                    <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Open</button>
+                                    <a href="{{ route('leads.show', $lead->lead_id )}}" class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">View</a>
+
+                                    {{-- <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Open</button> --}}
                                     <button data-id="{{ $lead->lead->id }}"
                                         class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 confirm-delete">Delete</button>
                                 </td>
@@ -97,7 +101,7 @@
                                 <td class="px-4 py-2 border">{{ Auth::user()->name }}</td>
                                 <td class="px-4 py-2 border">{{ ($lead->created_at)->format('d M,Y')}}</td>
                                 <td class="px-4 py-2 border">
-                                    <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Open</button>
+                                    <a href="{{ route('leads.show', $lead->id )}}" class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">View</a>
                                     <button data-id="{{ $lead->id }}"
                                         class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 confirm-delete">Delete</button>
                                 </td>
