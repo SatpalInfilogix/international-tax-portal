@@ -90,10 +90,15 @@ class LeadController extends Controller
             ->latest()
             ->get();
 
-        return view('leads.show', [
-            'lead' => $lead,
-            'leadAdvisor' => $leadAdvisor
-        ]);
+        if($lead){
+            return view('leads.show', [
+                'lead' => $lead,
+                'leadAdvisor' => $leadAdvisor
+            ]);      
+        } else {
+            return redirect(route('leads.index'));
+        }
+        
     }
 
     /**

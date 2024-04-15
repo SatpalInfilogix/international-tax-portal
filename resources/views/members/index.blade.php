@@ -127,10 +127,9 @@
                                     <div class="max-w-sm rounded overflow-hidden shadow-lg px-4 py-2">
                                         <div class=" flex">
                                             <div class="flex w-full">
-                                                <img src="http://127.0.0.1:8000/assets/icons/user-circle.jpg" class="w-10 h-10" alt="User Image">
+                                                <img src="{{ asset('assets/icons/user-circle.jpg') }}" class="w-10 h-10" alt="User Image">
                                                 <div class="px-6 py-2">
-                                                    <div class="font-bold mb-2">${response[i].name}</div>
-                                                   `;
+                                                    <div class="font-bold mb-2">${response[i].name}</div>`;
                                     if (response[i].user_additionl_data && response[i].user_additionl_data
                                         .company_name) {
                                         html +=
@@ -151,17 +150,16 @@
 
                                         for (let j = 0; j < expertises.length; j++) {
                                             expertisesHtml += `<div class="font-bold text-sm mr-2 flex items-center">
-                                                    <span class="size-1.5 inline-block rounded-full bg-green-800 mr-1"></span>
-                                                    ${expertises[j]}
-                                                </div>`;
+                                                        <span class="size-1.5 inline-block rounded-full bg-green-800 mr-1"></span>
+                                                        ${expertises[j]}
+                                                    </div>`;
                                         }
-
                                         html += `<div class="flex flex-wrap my-2">${expertisesHtml}</div>`;
                                     }
 
                                     html += ` <div class=" mb-2">${response[i].email}</div>
                                             <div class="w-20 text-center">
-                                                <img src="http://127.0.0.1:8000/assets/icons/users-group.png" alt="" class="w-10">
+                                                <img src="{{ asset('assets/icons/users-group.png') }}" alt="" class="w-10">
                                             
                                             </div>
                                         </div> 
@@ -175,7 +173,6 @@
                     }.bind(marker));
                 }
             }
-
         </script>
 
         <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_API_KEY') }}&callback=initMap">
