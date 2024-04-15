@@ -15,8 +15,15 @@ class MemberController extends Controller
     {
         $members = User::with('userAdditionalData')->latest()->get();
 
+        $countries = UserAdditionalData::select('country')
+            ->with('countryDetail')
+            ->orderBy('country', 'ASC')
+            ->distinct()
+            ->get();
+
         return view('members.index', [
-            'members' => $members
+            'members' => $members,
+            'countries' => $countries
         ]);
     }
 

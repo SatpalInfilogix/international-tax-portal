@@ -11,7 +11,7 @@ class LeadAdvisor extends Model
     protected $guarded = [];
 
     /**
-     * Join advisor with users table
+     * Join lead with leads table
      */
     public function lead(): HasOne
     {
