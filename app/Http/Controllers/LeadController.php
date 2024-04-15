@@ -16,9 +16,7 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $sentLeads = Lead::where('introducer_id', Auth::id())
-            ->latest()
-            ->get();
+        $sentLeads = Lead::where('introducer_id', Auth::id())->latest()->get();
 
         $receivedLeads = LeadAdvisor::where('advisor_id', Auth::id())
             ->with('lead', 'advisor', 'introducer')
@@ -110,7 +108,7 @@ class LeadController extends Controller
      */
     public function destroy(Lead $lead)
     {
-        $leadAdvisor = LeadAdvisor::where('lead_id', $lead->id)->get();
+        $leadAdvisor = LeadAdvisor::where('lead_id', $lead->id)->delete();
 
         $sentLeads = Lead::where('id', $lead->id)->delete();
 
