@@ -33,7 +33,7 @@
                                 <td class="px-4 py-2 border">{{  Carbon\Carbon::parse($lead->created_at)->format('d M, Y') }}</td>
                                 <td class="px-4 py-2 border">
                                     <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">Open</button>
-                                    <button data-id="{{ $lead->id }}"
+                                    <button data-id="{{ $lead->lead->id ?? $lead->id }}"
                                         class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 confirm-delete">Delete</button>
                                 </td>
                             </tr>
