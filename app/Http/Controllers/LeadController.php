@@ -82,9 +82,18 @@ class LeadController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Lead $lead)
+    public function show($id)
     {
-        //
+        $lead = Lead::where('id', $id)->first();
+        $leadAdvisor = LeadAdvisor::where('lead_id', $id)
+            ->with('lead', 'advisor', 'introducer')
+            ->latest()
+            ->get();
+
+        return view('leads.show', [
+            'lead' => $lead,
+            'leadAdvisor' => $leadAdvisor
+        ]);
     }
 
     /**
@@ -116,5 +125,18 @@ class LeadController extends Controller
             'success' => true,
             'message' => 'Lead has been successfully deleted.'
         ]);
+    }
+
+    public function advisorDetails(Request $request){
+        foreach($request->advisor_id as $key => $leadAdvisor)
+        {
+            $lead = LeadAdvisor::where('id', $leadAdvisor)->update([
+                'amount_quoted' => $request->amount_quoted[$key],
+                'notes'         => $request->notes[$key],
+                'status'        => $request->status[$key]
+            ]);
+        }
+
+        return Redirect::route("leads.index");
     }
 }

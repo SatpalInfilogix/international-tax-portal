@@ -16,6 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('lead_id');
             $table->unsignedBigInteger('introducer_id');
             $table->unsignedBigInteger('advisor_id');
+            $table->integer('amount_quoted')->nullable();
+            $table->string('notes')->nullable();
+            $table->enum('status',['New', 'Engaged', 'Quotation sent', 'Client Won', 'Client Lost'])->default('New');
             $table->timestamps();
             
             $table->foreign('lead_id')->references('id')->on('leads');
