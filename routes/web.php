@@ -32,7 +32,9 @@ Route::middleware('auth')->group(function () {
     ]);
 
     Route::get('/get-members-by-country/{country}', [MemberController::class, 'get_by_country'])->name('members.get-by-country');
-    Route::get('/autocomplete', [MemberController::class,'fetch'])->name('members.autocomplete');
+    Route::get('/autocomplete', [MemberController::class,'autocomplete'])->name('members.autocomplete');
+    Route::get('/email', [MemberController::class, 'membersEmail'])->name('members.email');
+    Route::post('/email', [MemberController::class, 'sendEmailEmail'])->name('members.email');
 
     Route::put('/expertise/update-rquest-status/{id}', [ExpertiseController::class, 'update_request_status'])->name('expertise.update-request-status');
 

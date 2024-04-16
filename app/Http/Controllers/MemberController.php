@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserAdditionalData;
 use App\Models\Country;
+use App\Mail\MemberEmail;
+use Illuminate\Support\Facades\Mail;
 
 class MemberController extends Controller
 {
@@ -90,7 +92,7 @@ class MemberController extends Controller
         //
     }
 
-    public function fetch(Request $request)
+    public function autocomplete(Request $request)
     {
         $members = User::with('userAdditionalData')
                 ->whereHas('userAdditionalData', function ($query) use ($request) {
@@ -109,5 +111,29 @@ class MemberController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function membersEmail()
+    {
+        $users = User::pluck('email')->toArray();
+        $userEmail=implode(',',$users);
+
+        return view('members.email', compact('userEmail'));
+    }
+
+    public function sendEmailEmail(Request $request)
+    {
+        $bcc = explode(',' ,$request->bcc);
+
+        $mailData = [
+            'subject'    => $request->subject,
+            'message'    => $request->message,
+        ];
+        foreach ($bcc as $key => $values) {
+            Mail::to($request->to)->bcc($request->bcc)->send(new MemberEmail($mailData));
+
+        }
+
+        return redirect(route('members.index'));
     }
 }
