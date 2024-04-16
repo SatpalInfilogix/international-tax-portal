@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
     ]);
 
     Route::get('/get-members-by-country/{country}', [MemberController::class, 'get_by_country'])->name('members.get-by-country');
+    Route::get('/autocomplete', [MemberController::class,'fetch'])->name('members.autocomplete');
+
     Route::put('/expertise/update-rquest-status/{id}', [ExpertiseController::class, 'update_request_status'])->name('expertise.update-request-status');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

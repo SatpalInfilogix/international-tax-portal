@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserAdditionalData;
+use App\Models\Country;
 
 class MemberController extends Controller
 {
@@ -87,5 +88,26 @@ class MemberController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function fetch(Request $request)
+    {
+        $members = User::with('userAdditionalData')
+                ->whereHas('userAdditionalData', function ($query) use ($request) {
+                    $query->where('country', 'LIKE', '%'. $request->search. '%');
+                })
+                ->latest()->get();
+        $data = '';
+        if(count($members) > 0 ){
+            $data .= '<ul class="list" style="display:block;position:relative;z-indez:1">';
+            foreach ($members as $key=> $member){
+                $data .= '<li class="list">'. $member->userAdditionalData->country .'</li>';
+            }
+            $data .= '</ul>';
+        } else{
+            $data .= '<li class="list"> No data found</li>';
+        }
+
+        return response()->json($data);
     }
 }

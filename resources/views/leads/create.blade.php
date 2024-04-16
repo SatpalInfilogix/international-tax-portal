@@ -4,6 +4,16 @@
         <h1 class="font-semibold text-center text-xl text-gray-800 leading-tight">
             {{ __('Register New Lead') }}
         </h1>
+        @php
+            $selectedMembers = '';
+            $selectedCountry = '';
+            if(!empty($_GET['country'])){
+                $selectedCountry = $_GET['country'];
+            }
+            if(!empty($_GET['members'])){
+                $selectedMembers = $_GET['members'];
+            }
+        @endphp
 
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
@@ -19,7 +29,7 @@
                                     class= "mt-1 border-gray-300 focus:border-green-500 focus:ring-green-500 rounded-md shadow-sm w-full">
                                     <option value="" selected disabled>Select Country</option>
                                     @foreach ($countries as $country)
-                                        <option value="{{ $country->country }}">{{ $country->country }}</option>
+                                        <option value="{{ $country->country }}" @selected($country->country==$selectedCountry)>{{ $country->country }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -216,7 +226,6 @@
                         }
                     }
                 })
-                // console.log($(this).val())
             })
 
             $("form[name='create-lead']").validate({
@@ -289,6 +298,69 @@
                 submitHandler: function(form) {
                     form.submit();
                 }
+            });
+
+            $( document ).ready(function() {
+                var country = $('#country').val();
+                $.ajax({
+                    url: `{{ url('get-members-by-country') }}/${country}`,
+                    method: 'GET',
+                    success: function(response) {
+                        let html = ``;
+
+                        for(let i=0; i<response.length; i++){
+                            console.log(response[i].id);
+
+                            html += ` <div class="flex items-center mt-2">
+                                <div class="w-full bg-white">
+                                    <div class="max-w-sm rounded overflow-hidden shadow-lg px-4 py-2">
+                                        <div class=" flex">
+                                            <div class="flex w-full">
+                                                <img src="http://127.0.0.1:8000/assets/icons/user-circle.jpg" class="w-20 h-20" alt="User Image">
+                                                <div class="px-6 py-4">
+                                                    <div class="font-bold text-xl mb-2">${response[i].name}</div>`;
+                                                    if(response[i].user_additionl_data && response[i].user_additionl_data.company_name){
+                                                        html += `<div class="font-bold text-md mb-2">${response[i].user_additionl_data.company_name}</div>`;
+                                                    }
+                                                html += `</div>
+                                            </div>
+                                            <div>
+                                                <img src="http://127.0.0.1:8000/assets/icons/users-group.png" alt="" class="w-20">
+                                            </div>
+                                        </div>`;
+
+                                        if(response[i].areas_of_expertise){
+                                            let expertises = response[i].areas_of_expertise.split(', ');
+                                            // console.log('..', expertises)
+                                            let expertisesHtml = ``;
+
+                                            for(let j = 0; j < expertises.length; j++){
+                                                expertisesHtml += `<div class="font-bold text-sm mr-2 flex items-center">
+                                                    <span class="size-1.5 inline-block rounded-full bg-green-800 mr-1"></span>
+                                                    ${expertises[j]}
+                                                </div>`;
+                                            }
+
+                                            html += `<div class="flex flex-wrap my-2">${expertisesHtml}</div>`;
+                                        }
+
+                                    html += `</div> 
+                                </div>
+                                <div class="w-20 text-center">
+                                    <input type="checkbox" name="member[]" value=${response[i].id} class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
+                                </div>
+                            </div>`;
+                        }
+
+                        $('.members-list').html(html);
+
+                        if (response.length > 0) {
+                            $('.available-members').removeClass('hidden');
+                        } else {
+                            $('.available-members').addClass('hidden');
+                        }
+                    }
+                })
             });
         })
     </script>
