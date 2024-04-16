@@ -22,7 +22,7 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                             <h2 class="text-lg font-medium text-gray-900 mb-4">{{ __('Client Information') }}</h2>
-
+                            <input type="hidden" name="membersIds[]" id ="membersIds" value="{{ $selectedMembers }}" > 
                             <div class="pb-3">
                                 <x-input-label for="country" :value="__('Country')" />
                                 <select name="country" id="country"
@@ -300,8 +300,13 @@
                 }
             });
 
+            function isInArray(value, array) {
+                return array.indexOf(value) !== -1;
+            }
+
             $( document ).ready(function() {
                 var country = $('#country').val();
+                var ids = $('#membersIds').val();
                 $.ajax({
                     url: `{{ url('get-members-by-country') }}/${country}`,
                     method: 'GET',
@@ -344,11 +349,12 @@
                                             html += `<div class="flex flex-wrap my-2">${expertisesHtml}</div>`;
                                         }
 
+                                    var isChecked = isInArray(response[i].id, ids);
                                     html += `</div> 
                                 </div>
-                                <div class="w-20 text-center">
-                                    <input type="checkbox" name="member[]" value=${response[i].id} class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
-                                </div>
+                                    <div class="w-20 text-center">
+                                        <input type="checkbox" name="member[]" value="${response[i].id}"  ${isChecked ? 'checked' : ''} class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
+                                    </div>
                             </div>`;
                         }
 

@@ -158,6 +158,7 @@
                                     }
 
                                     html += ` <div class=" mb-2">${response[i].email}</div>
+                                            <div class=" mb-2">${response[i].phone_number}</div>
                                             <div class="w-20 text-center">
                                                 <img src="{{ asset('assets/icons/users-group.png') }}" alt="" class="w-10">
                                             </div>
