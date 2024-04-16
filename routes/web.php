@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/user-status', [UserController::class, 'status'])->name('user-status');
 
     Route::post('leads/advisor-details', [LeadController::class, 'advisorDetails'])->name('leads.advisor-details');
+
+    Route::get('/download-csv', [ReportsController::class,'downloadCsv'])->name('reports.download-csv');
 });
 
 require __DIR__.'/auth.php';

@@ -32,7 +32,7 @@
                                                 <a href="#" class="h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800 mr-2">
                                                     Table View
                                                 </a>
-                                                <a href="#" class="h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">
+                                                <a href="{{ route('reports.download-csv')}}" class="h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">
                                                     Download CSV
                                                 </a>
                                             </td>
