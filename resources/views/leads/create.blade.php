@@ -181,7 +181,7 @@
                                     <div class="max-w-sm rounded overflow-hidden shadow-lg px-4 py-2">
                                         <div class=" flex">
                                             <div class="flex w-full">
-                                                <img src="http://127.0.0.1:8000/assets/icons/user-circle.jpg" class="w-20 h-20" alt="User Image">
+                                                <img src="{{ asset('assets/icons/user-circle.jpg') }}" class="w-20 h-20" alt="User Image">
                                                 <div class="px-6 py-4">
                                                     <div class="font-bold text-xl mb-2">${response[i].name}</div>`;
                                                     if(response[i].user_additionl_data && response[i].user_additionl_data.company_name){
@@ -190,7 +190,7 @@
                                                 html += `</div>
                                             </div>
                                             <div>
-                                                <img src="http://127.0.0.1:8000/assets/icons/users-group.png" alt="" class="w-20">
+                                                <img src="{{ asset('assets/icons/users-group.png') }}" alt="" class="w-20">
                                             </div>
                                         </div>`;
 

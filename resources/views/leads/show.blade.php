@@ -100,8 +100,7 @@
 
                             <div>
                                 <label for="bespoke_advice" class="inline-flex items-center">
-                                    <input id="bespoke_advice" name="services[]" value="Bespoke Advice"
-                                        type="checkbox"
+                                    <input id="bespoke_advice" name="services[]" value="Bespoke Advice" type="checkbox"
                                         class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500" />
                                     <span class="ms-2 text-sm text-gray-600">{{ __('Bespoke Advice') }}</span>
                                 </label>
@@ -111,7 +110,7 @@
                     </div>
 
                     <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg height-max-content available-members">
-                        <h2 class="text-lg font-medium text-gray-900 mb-4">{{ __('Members Available') }}</h2>
+                        <h2 class="text-2xl font-extrabold text-gray-900 mb-4">{{ __('Members Available') }}</h2>
                         <div class="flex">
                             <div class="w-full">
                                 <p>Country Members</p>
@@ -124,14 +123,14 @@
                                 <div class="flex items-center mt-2">
                                     <div class="w-full bg-white">
                                         @foreach ($leadAdvisor as $advisor)
-                                            <div class="max-w-sm rounded overflow-hidden shadow-lg px-4 py-2">
-                                                <x-text-input name="advisor_id[]"
-                                                type="hidden" value="{{ $advisor->id ?? '' }}" />
+                                            <div class="rounded overflow-hidden border shadow-lg px-4 py-2">
+                                                <x-text-input name="advisor_id[]" type="hidden"
+                                                    value="{{ $advisor->id ?? '' }}" />
 
-                                                <div class=" flex">
-                                                    <img src="http://127.0.0.1:8000/assets/icons/user-circle.jpg"
-                                                        class="w-5 h-5" alt="User Image">
-                                                    <span><strong>{{ $advisor->advisor->name }}</strong></span>
+                                                <div class="flex items-center mb-2">
+                                                    <img src="{{ asset('assets/icons/user-circle.jpg') }}"
+                                                        class="w-10 h-10 mr-2" alt="User Image">
+                                                    <p class="font-bold text-lg">{{ $advisor->advisor->name }}</p>
                                                 </div>
                                                 <div class="pb-3">
                                                     <x-input-label for="amount_quoted" :value="__('Amount Quoted')" />
@@ -149,11 +148,16 @@
                                                     <x-input-label for="status" :value="__('Status')" />
                                                     <select id="status" name="status[]"
                                                         class= "border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
-                                                        <option value="New" @selected($advisor->status == 'New')>New</option>
-                                                        <option value="Engaged" @selected($advisor->status == 'Engaged')>Engaged</option>
-                                                        <option value="Quotation sent" @selected($advisor->status == 'Quotation sent')>Quotation sent</option>
-                                                        <option value="Client Won" @selected($advisor->status == 'Client Won')>Client Won</option>
-                                                        <option value="Client Lost" @selected($advisor->status == 'Client Lost')>Client Lost</option>
+                                                        <option value="New" @selected($advisor->status == 'New')>New
+                                                        </option>
+                                                        <option value="Engaged" @selected($advisor->status == 'Engaged')>Engaged
+                                                        </option>
+                                                        <option value="Quotation sent" @selected($advisor->status == 'Quotation sent')>
+                                                            Quotation sent</option>
+                                                        <option value="Client Won" @selected($advisor->status == 'Client Won')>Client
+                                                            Won</option>
+                                                        <option value="Client Lost" @selected($advisor->status == 'Client Lost')>Client
+                                                            Lost</option>
                                                     </select>
                                                 </div>
                                             </div>
