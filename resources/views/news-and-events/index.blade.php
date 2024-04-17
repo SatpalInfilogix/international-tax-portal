@@ -38,13 +38,10 @@
                         <a href="{{ route('news-and-events.edit', $newsAndEvent->id) }}" class="bg-green-500 text-white hover:bg-green-600 py-1 px-2 rounded-full mr-1 text-md">
                             <i class="ri-pencil-line"></i>
                         </a>
-                        <!-- <form method="POST" action="{{route('news-and-events.destroy', $newsAndEvent->id) }}"  >
-                            @method('DELETE')
-                            @csrf -->
-                            <button data-id="{{ $newsAndEvent->id }} " data-href="{{ route('news-and-events.destroy', $newsAndEvent->id) }}" class="bg-green-500 text-white hover:bg-green-600 py-1 px-2 rounded-full text-md confirm-delete">
-                                <i class="ri-close-fill"></i>
-                            </button>
-                        <!-- </form> -->
+
+                        <button data-id="{{ $newsAndEvent->id }} " data-href="{{ route('news-and-events.destroy', $newsAndEvent->id) }}" class="bg-green-500 text-white hover:bg-green-600 py-1 px-2 rounded-full text-md confirm-delete">
+                            <i class="ri-close-fill"></i>
+                        </button>
                     </div>
                 </div>
                 

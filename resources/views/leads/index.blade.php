@@ -10,6 +10,7 @@
                 </a>
             </div>
 
+            @if(Auth::user()->role == 'admin')
             <div class="all-leads-container">
                 <h1 class="font-semibold text-xl text-gray-800 leading-tight">
                     {{ __('All Leads') }}
@@ -44,6 +45,7 @@
                     </table>
                 </div>
             </div>
+            @endif
             
             <div class="received-leads-container">
                 <h1 class="font-semibold text-xl text-gray-800 leading-tight">

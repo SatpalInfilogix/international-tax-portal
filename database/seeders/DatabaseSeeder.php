@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
                 'user_type' => 'Fusion',
                 'phone_number' => '9876543210',
                 'password' => Hash::make('12345678'),
+                'role'     => 'admin'
             ]);
             UserAdditionalData::create([
                 'user_id' => 1,
