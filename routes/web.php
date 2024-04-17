@@ -32,6 +32,10 @@ Route::middleware('auth')->group(function () {
     ]);
 
     Route::get('/get-members-by-country/{country}', [MemberController::class, 'get_by_country'])->name('members.get-by-country');
+    Route::get('/autocomplete', [MemberController::class,'autocomplete'])->name('members.autocomplete');
+    Route::get('/email', [MemberController::class, 'membersEmail'])->name('members.email');
+    Route::post('/email', [MemberController::class, 'sendEmailEmail'])->name('members.email');
+
     Route::put('/expertise/update-rquest-status/{id}', [ExpertiseController::class, 'update_request_status'])->name('expertise.update-request-status');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,6 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/user-status', [UserController::class, 'status'])->name('user-status');
 
     Route::post('leads/advisor-details', [LeadController::class, 'advisorDetails'])->name('leads.advisor-details');
+
+    Route::get('/download-csv', [ReportsController::class,'downloadCsv'])->name('reports.download-csv');
 });
 
 require __DIR__.'/auth.php';

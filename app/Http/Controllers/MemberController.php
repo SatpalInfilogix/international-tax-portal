@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserAdditionalData;
+use App\Models\Country;
+use App\Mail\MemberEmail;
+use Illuminate\Support\Facades\Mail;
 
 class MemberController extends Controller
 {
@@ -87,5 +90,50 @@ class MemberController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function autocomplete(Request $request)
+    {
+        $members = User::with('userAdditionalData')
+                ->whereHas('userAdditionalData', function ($query) use ($request) {
+                    $query->where('country', 'LIKE', '%'. $request->search. '%');
+                })
+                ->latest()->get();
+        $data = '';
+        if(count($members) > 0 ){
+            $data .= '<ul class="list" style="display:block;position:relative;z-indez:1">';
+            foreach ($members as $key=> $member){
+                $data .= '<li class="list">'. $member->userAdditionalData->country .'</li>';
+            }
+            $data .= '</ul>';
+        } else{
+            $data .= '<li class="list"> No data found</li>';
+        }
+
+        return response()->json($data);
+    }
+
+    public function membersEmail()
+    {
+        $users = User::pluck('email')->toArray();
+        $userEmail=implode(',',$users);
+
+        return view('members.email', compact('userEmail'));
+    }
+
+    public function sendEmailEmail(Request $request)
+    {
+        $bcc = explode(',' ,$request->bcc);
+
+        $mailData = [
+            'subject'    => $request->subject,
+            'message'    => $request->message,
+        ];
+        foreach ($bcc as $key => $values) {
+            Mail::to($request->to)->bcc($request->bcc)->send(new MemberEmail($mailData));
+
+        }
+
+        return redirect(route('members.index'));
     }
 }

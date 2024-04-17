@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Report;
+use App\Models\User;
+
 use Illuminate\Http\Request;
 
 class ReportsController extends Controller
@@ -61,5 +63,22 @@ class ReportsController extends Controller
     public function destroy(Report $report)
     {
         //
+    }
+
+    public function downloadCsv()
+    {
+        $users = User::latest()->get();
+        $filename = 'download-reports.csv';
+        $fp=fopen($filename, "w+");
+        fputcsv($fp, array('Name', 'Email','Address'));
+
+        foreach($users as $row) {
+            fputcsv($fp, array($row->name, $row->email, $row->address));
+        }
+
+        fclose($fp);
+        $headers = array('Content-Type' => 'text\csv');
+
+        return response()->download($filename, 'download-reports.csv', $headers);
     }
 }
