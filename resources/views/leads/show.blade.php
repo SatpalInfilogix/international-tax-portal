@@ -5,6 +5,12 @@
             {{ __('Lead Information') }}
         </h1>
 
+        @php
+            $type = '';
+            if(!empty($_GET['type'])){
+                $type = $_GET['type'];
+            }
+        @endphp
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
@@ -119,6 +125,7 @@
 
                         <form action="{{ route('leads.advisor-details') }}" name="create-lead" method="post">
                             @csrf
+                            <input type="hidden" name="type" id="type" value="{{$type}}">
                             <div class="members-list">
                                 <div class="flex items-center mt-2">
                                     <div class="w-full bg-white">
@@ -135,19 +142,19 @@
                                                 <div class="pb-3">
                                                     <x-input-label for="amount_quoted" :value="__('Amount Quoted')" />
                                                     <x-text-input id="amount_quoted" name="amount_quoted[]"
-                                                        type="text" class="mt-1 block w-full"
+                                                        type="text" class="mt-1 block w-full amount_quoted"
                                                         value="{{ $advisor->amount_quoted ?? '' }}" />
                                                 </div>
                                                 <div class="pb-3">
                                                     <x-input-label for="Notes" :value="__('Notes')" />
                                                     <x-text-area id="notes" name="notes[]" type="text"
-                                                        class="mt-1 block w-full"
+                                                        class="mt-1 block w-full notes"
                                                         value="{{ $advisor->notes ?? '' }}" />
                                                 </div>
                                                 <div class="pb-3">
                                                     <x-input-label for="status" :value="__('Status')" />
                                                     <select id="status" name="status[]"
-                                                        class= "border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
+                                                        class= "status border-gray-300 focus:border-green-500 focus:ring-green-500 mt-1 rounded-md shadow-sm w-full">
                                                         <option value="New" @selected($advisor->status == 'New')>New
                                                         </option>
                                                         <option value="Engaged" @selected($advisor->status == 'Engaged')>Engaged
@@ -189,5 +196,14 @@
                 }
             })
         })
+
+        $( document ).ready(function() {
+            var type = $('#type').val();
+            if(type == 'sent-lead'){
+                $('.amount_quoted').attr('disabled', 'disabled');
+                $('.notes').attr('disabled', 'disabled');
+                $('.status').attr('disabled', 'disabled');
+            }
+        });
     </script>
 </x-app-layout>

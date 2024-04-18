@@ -29,12 +29,12 @@
                                                 <a href="#" class="h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800 mr-2">
                                                     Graph View
                                                 </a>
-                                                <a href="#" class="h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800 mr-2">
+                                                <button data-href="{{ route('reports.report-table')}}" data-name="sent-table" class="report-table h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800 mr-2">
                                                     Table View
-                                                </a>
-                                                <a href="{{ route('reports.download-csv')}}" class="h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">
+                                                </button>
+                                                <button data-href="{{ route('reports.report-table')}}" data-name="sent-download-csv" class="report-table h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">
                                                     Download CSV
-                                                </a>
+                                                </button>
                                             </td>
                                         </tr>
 
@@ -46,12 +46,12 @@
                                                 <a href="#" class="h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800 mr-2">
                                                     Graph View
                                                 </a>
-                                                <a href="#" class="h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800 mr-2">
+                                                <button data-href="{{ route('reports.report-table')}}" data-name="received-table" class="report-table h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800 mr-2">
                                                     Table View
-                                                </a>
-                                                <a href="#" class="h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">
+                                                </button>
+                                                <button data-href="{{ route('reports.report-table')}}" data-name="received-download-csv" class="report-table h-full text-white px-4 py-2 rounded-full bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">
                                                     Download CSV
-                                                </a>
+                                                </button>
                                             </td>
                                         </tr>
 
@@ -119,6 +119,12 @@
     <script>
         $(document).ready(function() {
             $('.data-table').DataTable();
+        });
+
+        $('.report-table').click(function() {
+            var type = $(this).data('name');
+            var href = $(this).data('href');
+            window.location.href = `${href}?type=${type}`;
         });
     </script>
 
