@@ -66,23 +66,6 @@ class ReportsController extends Controller
         //
     }
 
-    // public function downloadCsv()
-    // {
-    //     $users = User::latest()->get();
-    //     $filename = 'download-reports.csv';
-    //     $fp=fopen($filename, "w+");
-    //     fputcsv($fp, array('Name', 'Email','Address'));
-
-    //     foreach($users as $row) {
-    //         fputcsv($fp, array($row->name, $row->email, $row->address));
-    //     }
-
-    //     fclose($fp);
-    //     $headers = array('Content-Type' => 'text\csv');
-
-    //     return response()->download($filename, 'download-reports.csv', $headers);
-    // }
-
     public function report()
     {
         $type = '';
@@ -100,46 +83,30 @@ class ReportsController extends Controller
         if($type == 'sent-table' || $type == 'sent-download-csv') {
             if(Auth::user()->role == 'admin') {
                 $sentReceivedBusinessReports = User::with('userAdditionalData')->latest()->get();
-                foreach($sentReceivedBusinessReports as $key => $businessReport) {
-                    $leads = LeadAdvisor::where('introducer_id', $businessReport->id);
-                    $sentReceivedBusinessReports[$key]['leadAmounts'] = $leads->sum('amount_quoted');
-                    $sentReceivedBusinessReports[$key]['leadCount'] = optional($leads)->count();
-                    $sentReceivedBusinessReports[$key]['last1YearAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last1YearDate)->sum('amount_quoted');
-                    $sentReceivedBusinessReports[$key]['last6MonthAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last6MonthDate)->sum('amount_quoted');
-                    $sentReceivedBusinessReports[$key]['last3MonthAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last3MonthDate)->sum('amount_quoted');
-                }
             } else {
                 $sentReceivedBusinessReports = User::with('userAdditionalData')->where('id', Auth::id())->get();
-                foreach($sentReceivedBusinessReports as $key => $businessReport) {
-                    $leads = LeadAdvisor::where('introducer_id', $businessReport->id);
-                    $sentReceivedBusinessReports[$key]['leadAmounts'] = $leads->sum('amount_quoted');
-                    $sentReceivedBusinessReports[$key]['leadCount'] = optional($leads)->count();
-                    $sentReceivedBusinessReports[$key]['last1YearAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last1YearDate)->sum('amount_quoted');
-                    $sentReceivedBusinessReports[$key]['last6MonthAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last6MonthDate)->sum('amount_quoted');
-                    $sentReceivedBusinessReports[$key]['last3MonthAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last3MonthDate)->sum('amount_quoted');
-                }
+            }
+            foreach($sentReceivedBusinessReports as $key => $businessReport) {
+                $leads = LeadAdvisor::where('introducer_id', $businessReport->id);
+                $sentReceivedBusinessReports[$key]['leadAmounts'] = $leads->sum('amount_quoted');
+                $sentReceivedBusinessReports[$key]['leadCount'] = optional($leads)->count();
+                $sentReceivedBusinessReports[$key]['last1YearAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last1YearDate)->sum('amount_quoted');
+                $sentReceivedBusinessReports[$key]['last6MonthAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last6MonthDate)->sum('amount_quoted');
+                $sentReceivedBusinessReports[$key]['last3MonthAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last3MonthDate)->sum('amount_quoted');
             }
         } elseif($type == 'received-table' || $type == 'received-download-csv'){
             if(Auth::user()->role == 'admin') {
                 $sentReceivedBusinessReports = User::with('userAdditionalData')->latest()->get();
-                foreach($sentReceivedBusinessReports as $key => $businessReport) {
-                    $leads = LeadAdvisor::where('advisor_id', $businessReport->id);
-                    $sentReceivedBusinessReports[$key]['leadAmounts'] = $leads->sum('amount_quoted');
-                    $sentReceivedBusinessReports[$key]['leadCount'] = optional($leads)->count();
-                    $sentReceivedBusinessReports[$key]['last1YearAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last1YearDate)->sum('amount_quoted');
-                    $sentReceivedBusinessReports[$key]['last6MonthAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last6MonthDate)->sum('amount_quoted');
-                    $sentReceivedBusinessReports[$key]['last3MonthAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last3MonthDate)->sum('amount_quoted');
-                }
             } else {
                 $sentReceivedBusinessReports = User::with('userAdditionalData')->where('id', Auth::id())->get();
-                foreach($sentReceivedBusinessReports as $key => $businessReport) {
-                    $leads = LeadAdvisor::where('advisor_id', $businessReport->id);
-                    $sentReceivedBusinessReports[$key]['leadAmounts'] = $leads->sum('amount_quoted');
-                    $sentReceivedBusinessReports[$key]['leadCount'] = optional($leads)->count();
-                    $sentReceivedBusinessReports[$key]['last1YearAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last1YearDate)->sum('amount_quoted');
-                    $sentReceivedBusinessReports[$key]['last6MonthAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last6MonthDate)->sum('amount_quoted');
-                    $sentReceivedBusinessReports[$key]['last3MonthAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last3MonthDate)->sum('amount_quoted');
-                }
+            }
+            foreach($sentReceivedBusinessReports as $key => $businessReport) {
+                $leads = LeadAdvisor::where('advisor_id', $businessReport->id);
+                $sentReceivedBusinessReports[$key]['leadAmounts'] = $leads->sum('amount_quoted');
+                $sentReceivedBusinessReports[$key]['leadCount'] = optional($leads)->count();
+                $sentReceivedBusinessReports[$key]['last1YearAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last1YearDate)->sum('amount_quoted');
+                $sentReceivedBusinessReports[$key]['last6MonthAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last6MonthDate)->sum('amount_quoted');
+                $sentReceivedBusinessReports[$key]['last3MonthAmount'] = $leads->where('created_at', '<=', $todayDate)->where('created_at', '>=', $last3MonthDate)->sum('amount_quoted');
             }
         }
 
