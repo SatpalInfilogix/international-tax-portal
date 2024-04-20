@@ -27,11 +27,13 @@
                             <tr>
                                 <th class="px-4 py-2 border">Member</th>
                                 <th class="px-4 py-2 border">Country</th>
-                                <th class="px-4 py-2 bg-gray-10 border">Amount</th>
                                 <th class="px-4 py-2 bg-gray-10 border">{{ ($type == 'sent-table') ? 'Total Sent Lead' : 'Total Received Lead' }} </th>
+                                @if(in_array($type, ['sent-table', 'received-table', 'lost-table', 'won-table']))
+                                <th class="px-4 py-2 bg-gray-10 border">Amount</th>
                                 <th class="px-4 py-2 bg-gray-10 border">Last 3 Month</th>
                                 <th class="px-4 py-2 bg-gray-10 border">Last 6 Month</th>
                                 <th class="px-4 py-2 bg-gray-10 border">Last 1 Year</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -39,11 +41,13 @@
                             <tr>
                                 <td class="px-4 py-2 border">{{ $businessReport->name}}</td>
                                 <td class="px-4 py-2 border">{{ $businessReport->userAdditionalData->country }}</td>
-                                <td class="px-4 py-2 border">{{ $businessReport->leadAmounts }}</td>
                                 <td class="px-4 py-2 border">{{ $businessReport->leadCount }}</td>
+                                @if(in_array($type, ['sent-table', 'received-table', 'lost-table', 'won-table']))
+                                <td class="px-4 py-2 border">{{ $businessReport->leadAmounts }}</td>
                                 <td class="px-4 py-2 border">{{ $businessReport->last3MonthAmount}}</td>
                                 <td class="px-4 py-2 border">{{ $businessReport->last6MonthAmount}}</td>
                                 <td class="px-4 py-2 border">{{ $businessReport->last1YearAmount}}</td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

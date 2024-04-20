@@ -46,7 +46,6 @@ Route::middleware('auth')->group(function () {
 
     Route::post('leads/advisor-details', [LeadController::class, 'advisorDetails'])->name('leads.advisor-details');
 
-    // Route::get('/download-csv', [ReportsController::class,'downloadCsv'])->name('reports.download-csv');
     Route::get('/report-table', [ReportsController::Class,'report'])->name('reports.report-table');
 
     Route::post('/one-to-one-status', [OneToOneController::class, 'oneToOneStatus'])->name('one-to-one-status');
