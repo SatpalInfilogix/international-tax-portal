@@ -11,8 +11,14 @@
                 <h1 class="font-semibold text-4xl text-gray-800 leading-tight">
                     @if($type == 'received-table')
                     {{ __('Reports of business Received') }}
-                    @else
+                    @elseif($type == 'sent-table')
                     {{ __('Reports of business Sent') }}
+                    @elseif($type == 'lost-table')
+                    {{ __('Reports of business lost') }}
+                    @elseif($type == 'won-table')
+                    {{ __('Reports of business won') }}
+                    @else
+                    {{ __('Reports of expertise requests') }}
                     @endif
                 </h1>
                 <a href="{{ route('reports.index') }}" class="h-full text-white px-4 py-2 rounded-md bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">
@@ -27,12 +33,24 @@
                             <tr>
                                 <th class="px-4 py-2 border">Member</th>
                                 <th class="px-4 py-2 border">Country</th>
-                                <th class="px-4 py-2 bg-gray-10 border">{{ ($type == 'sent-table') ? 'Total Sent Lead' : 'Total Received Lead' }} </th>
+                                <th class="px-4 py-2 bg-gray-10 border">
+                                    @if($type == 'received-table')
+                                        Total Sent Lead
+                                    @elseif($type == 'sent-table')
+                                        Total Received Lead
+                                    @elseif($type == 'lost-table')
+                                        Total Lost Lead
+                                    @elseif($type == 'won-table')
+                                        Total Won Lead
+                                    @else
+                                        Total Expertise
+                                    @endif
+                                </th>
                                 @if(in_array($type, ['sent-table', 'received-table', 'lost-table', 'won-table']))
-                                <th class="px-4 py-2 bg-gray-10 border">Amount</th>
-                                <th class="px-4 py-2 bg-gray-10 border">Last 3 Month</th>
-                                <th class="px-4 py-2 bg-gray-10 border">Last 6 Month</th>
-                                <th class="px-4 py-2 bg-gray-10 border">Last 1 Year</th>
+                                    <th class="px-4 py-2 bg-gray-10 border">Amount</th>
+                                    <th class="px-4 py-2 bg-gray-10 border">Last 3 Month</th>
+                                    <th class="px-4 py-2 bg-gray-10 border">Last 6 Month</th>
+                                    <th class="px-4 py-2 bg-gray-10 border">Last 1 Year</th>
                                 @endif
                             </tr>
                         </thead>
@@ -43,10 +61,10 @@
                                 <td class="px-4 py-2 border">{{ $businessReport->userAdditionalData->country }}</td>
                                 <td class="px-4 py-2 border">{{ $businessReport->leadCount }}</td>
                                 @if(in_array($type, ['sent-table', 'received-table', 'lost-table', 'won-table']))
-                                <td class="px-4 py-2 border">{{ $businessReport->leadAmounts }}</td>
-                                <td class="px-4 py-2 border">{{ $businessReport->last3MonthAmount}}</td>
-                                <td class="px-4 py-2 border">{{ $businessReport->last6MonthAmount}}</td>
-                                <td class="px-4 py-2 border">{{ $businessReport->last1YearAmount}}</td>
+                                    <td class="px-4 py-2 border">{{ $businessReport->leadAmounts }}</td>
+                                    <td class="px-4 py-2 border">{{ $businessReport->last3MonthAmount}}</td>
+                                    <td class="px-4 py-2 border">{{ $businessReport->last6MonthAmount}}</td>
+                                    <td class="px-4 py-2 border">{{ $businessReport->last1YearAmount}}</td>
                                 @endif
                             </tr>
                             @endforeach
