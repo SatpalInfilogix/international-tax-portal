@@ -49,7 +49,7 @@
                             @endif
                         </div>
                         @if ($member->userAdditionalData && $member->userAdditionalData->company_name)
-                            <p class="text-gray-700 text-sm"> ({{ $member->userAdditionalData->company_name }})</p>
+                            <p class="text-gray-700 text-sm text-start"> ({{ $member->userAdditionalData->company_name }})</p>
                         @endif
                     </div>
                 </button>
@@ -62,7 +62,7 @@
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto">
                     <div class="flex justify-between items-center py-3 px-4 border-b">
                         <h3 class="text-xl font-bold text-gray-800">
-                            <div class="country-name"> </div>
+                            <div class="country-name"></div>
                         </h3>
                         <button type="button"
                             class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none close-modal">
@@ -71,11 +71,10 @@
                     </div>
 
                     <div class="p-4 overflow-y-auto">
-                        <div class="members-list">
-                        </div>
-                        <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t">
+                        <div class="members-list"></div>
+                        <div class="flex justify-end items-center gap-x-2 py-3 border-t">
                             <button
-                                class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800 send-lead">
+                                class="rounded-full text-sm px-6 py-3 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800 send-lead">
                                 Send Lead</button>
                         </div>
                     </div>
@@ -94,44 +93,49 @@
                         for (let i = 0; i < response.length; i++) {
                             html += ` <div class="flex items-center mt-2">
                             <div class="w-full bg-white">
-                            <div class="max-w-sm rounded overflow-hidden shadow-lg px-4 py-2">
-                                <div class=" flex">
-                                    <div class="flex w-full">
-                                        <img src="http://127.0.0.1:8000/assets/icons/user-circle.jpg" class="w-10 h-10" alt="User Image">
+                            <div class="rounded overflow-hidden shadow-lg px-4 py-2">
+                                <div class="flex">
+                                    <div class="flex w-full items-center">
+                                        <img src="{{ asset('assets/icons/user-circle.jpg') }}" class="w-12 h-12" alt="User Image">
                                         <div class="px-6 py-2">
-                                            <div class="font-bold mb-2">${response[i].name}</div>`;
-                                            
-                                if (response[i].user_additionl_data && response[i].user_additionl_data.company_name) {
-                                    html +=
-                                        `<div class="font-bold text-md mb-2">${response[i].user_additionl_data.company_name}</div>`;
-                                }
+                                            <div class="font-bold">${response[i].name}</div>`;
+
+                                    if (response[i].user_additionl_data && response[i].user_additionl_data.company_name) {
+                                        html +=
+                                            `<div class="font-bold text-md mt-2">${response[i].user_additionl_data.company_name}</div>`;
+                                    }
 
                                 html += `</div>
                                     </div>
                                         <div class="w-20 text-center">
                                             <input type="checkbox" name="member[]" value=${response[i].id} class="member rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
                                         </div>
+                                    </div>
+                                    
+                                    <div class="mt-4 mb-2">
+                                        <i class="ri-mail-line"></i>
+                                        ${response[i].email}
+                                    </div>
+                                    <div class="mb-2">
+                                        <i class="ri-phone-line"></i>
+                                        ${response[i].phone_number}
                                     </div>`;
 
-                                if (response[i].areas_of_expertise) {
-                                    let expertises = response[i].areas_of_expertise.split(', ');
-                                    let expertisesHtml = ``;
+                            if (response[i].areas_of_expertise) {
+                                let expertises = response[i].areas_of_expertise.split(', ');
+                                let expertisesHtml = ``;
 
-                                    for (let j = 0; j < expertises.length; j++) {
-                                        expertisesHtml += `<div class="font-bold text-sm mr-2 flex items-center">
+                                for (let j = 0; j < expertises.length; j++) {
+                                    expertisesHtml += `<div class="font-bold text-sm mr-2 flex items-center">
                                                 <span class="size-1.5 inline-block rounded-full bg-green-800 mr-1"></span>
                                                 ${expertises[j]}
                                             </div>`;
-                                    }
-
-                                    html += `<div class="flex flex-wrap my-2">${expertisesHtml}</div>`;
                                 }
 
-                            html += ` <div class=" mb-2">${response[i].email}</div>
-                                    <div class="w-20 text-center">
-                                        <img src="http://127.0.0.1:8000/assets/icons/users-group.png" alt="" class="w-10">
-                                    </div>
-                                </div>
+                                html += `<div class="flex flex-wrap my-2">${expertisesHtml}</div>`;
+                            }
+
+                            html += `</div>
                             </div>
                         </div>`;
                         }
@@ -144,7 +148,7 @@
                 })
             }
 
-            
+
             function initMap() {
                 var latlng = new google.maps.LatLng(-25.92, 151.25); // default location
 
@@ -193,6 +197,9 @@
                     var members = selected.join(",");
                 }
 
+                if(!members){
+                    members = '';
+                }
                 window.location.href = `{{ route('leads.create') }}?country=${country}&members=${members}`;
             });
 
@@ -209,7 +216,7 @@
                 appendTo: ".country-dropdown",
                 classes: {
                     "ui-autocomplete": "px-2 py-1",
-                    "ui-menu-item-wrapper": "hover-bg-gray-100" 
+                    "ui-menu-item-wrapper": "hover-bg-gray-100"
                 },
             });
 
@@ -217,7 +224,7 @@
             $('.search-country').click(function() {
                 var country_name = $('[name="search-country"]').val();
                 renderMembersByCountry(country_name);
-               
+
             });
 
             $('.search-country-data').click(function() {
