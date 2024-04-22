@@ -38,6 +38,9 @@
 
     <!-- Sweetalert -->
     <script src="{{ asset('assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
+
+    <!-- Autocomplete -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 </head>
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
