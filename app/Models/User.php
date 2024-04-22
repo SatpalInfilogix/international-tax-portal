@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserAdditionalData::class);
     }
+
+    public function lead()
+    {
+        return $this->belongsTo(LeadAdvisor::class,'id', 'introducer_id');
+    }
 }

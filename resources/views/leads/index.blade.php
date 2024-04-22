@@ -10,6 +10,7 @@
                 </a>
             </div>
 
+            @if(Auth::user()->role == 'admin')
             <div class="all-leads-container">
                 <h1 class="font-semibold text-xl text-gray-800 leading-tight">
                     {{ __('All Leads') }}
@@ -44,6 +45,7 @@
                     </table>
                 </div>
             </div>
+            @endif
             
             <div class="received-leads-container">
                 <h1 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -101,21 +103,12 @@
                                 <td class="px-4 py-2 border">{{ Auth::user()->name }}</td>
                                 <td class="px-4 py-2 border">{{ ($lead->created_at)->format('d M,Y')}}</td>
                                 <td class="px-4 py-2 border">
-                                    <a href="{{ route('leads.show', $lead->id )}}" class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">View</a>
+                                    <button data-id="{{ $lead->id }}" data-href="{{ route('leads.show', $lead->id )}}" data-name="sent-lead" class="sent-lead rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">View</button>
                                     <button data-id="{{ $lead->id }}"
                                         class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600 confirm-delete">Delete</button>
                                 </td>
                             </tr>
                             @endforeach
-                            {{-- <tr>
-                                <td class="px-4 py-2 border">Test</td>
-                                <td class="px-4 py-2 border">Admin</td>
-                                <td class="px-4 py-2 border">2021-05-14</td>
-                                <td class="px-4 py-2 border">
-                                    <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Open</button>
-                                    <button class="rounded-full text-sm px-2 py-1 text-white bg-green-500 border-green-600">Delete</button>
-                                </td>
-                            </tr> --}}
                         </tbody>
                     </table>
                 </div>
@@ -158,6 +151,13 @@
             });
         });
 
+        $('.sent-lead').click(function() {
+                var id = $(this).data('id');
+                var type = $(this).data('name');
+                var href = $(this).data('href');
+                console.log(href);
+                window.location.href = `${href}?type=${type}`;
+            });
     </script>
 
 </x-app-layout>
