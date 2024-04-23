@@ -9,7 +9,17 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="flex justify-between">
                 <h1 class="font-semibold text-4xl text-gray-800 leading-tight">
-                    {{ __('Reports of business Sent') }}
+                    @if($type == 'sent-graph')
+                        {{ __('Reports of business Sent') }}
+                    @elseif($type == 'received-graph')
+                        {{ __('Reports of business Received') }}
+                    @elseif($type == 'lost-graph')
+                        {{ __('Reports of business Lost')}}
+                    @elseif($type == 'won-graph')
+                        {{ __('Reports of business Won')}}
+                    @else
+                        {{ __('Reports of Experties')}}
+                    @endif
                 </h1>
                 <a href="{{ route('reports.index') }}"
                     class="h-full text-white px-4 py-2 rounded-md bg-green-500 border-green-600 hover:bg-green-700 hover:border-green-800">
