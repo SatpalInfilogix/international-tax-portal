@@ -19,4 +19,9 @@ class UserAdditionalData extends Model
     {
         return $this->hasOne(Country::class, 'name', 'country');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

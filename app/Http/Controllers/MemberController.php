@@ -123,16 +123,21 @@ class MemberController extends Controller
 
     public function sendEmailEmail(Request $request)
     {
-        $bcc = explode(',' ,$request->bcc);
+        $usersEmails = explode(',' ,$request->bcc);
+
+        $bcc = [];
+        foreach($usersEmails as $key => $usersEmail){
+            $emailArr = [];
+            $emailArr['email'] = $usersEmail;
+            $bcc[$key] = (object)$emailArr;
+        }
 
         $mailData = [
             'subject'    => $request->subject,
             'message'    => $request->message,
         ];
-        foreach ($bcc as $key => $values) {
-            Mail::to($request->to)->bcc($request->bcc)->send(new MemberEmail($mailData));
 
-        }
+        Mail::to($request->to)->bcc($bcc)->send(new MemberEmail($mailData));
 
         return redirect(route('members.index'));
     }

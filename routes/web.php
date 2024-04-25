@@ -46,8 +46,14 @@ Route::middleware('auth')->group(function () {
 
     Route::post('leads/advisor-details', [LeadController::class, 'advisorDetails'])->name('leads.advisor-details');
 
-    Route::get('/report-table', [ReportsController::Class,'report'])->name('reports.report-table');
+    Route::get('/report-graph', [ReportsController::class, 'reportsGraph'])->name('reports.report-graph');
+    Route::get('/graph-data/{country}', [ReportsController::class, 'memberData'])->name('reports.graph-data');
+    Route::get('/recevived-graph/{country}', [ReportsController::class, 'receivedGraphData'])->name('reports.recevived-graph');
+    Route::get('/lost-graph/{country}', [ReportsController::class, 'lostGraphData'])->name('reports.lost-graph');
+    Route::get('/won-graph/{country}', [ReportsController::class, 'wonGraphData'])->name('reports.won-graph');
+    Route::get('/experties-graph/{country}', [ReportsController::class, 'expertiesGraph'])->name('reports.experties-graph');
 
+    Route::get('/report-table', [ReportsController::Class,'report'])->name('reports.report-table');
     Route::post('/one-to-one-status', [OneToOneController::class, 'oneToOneStatus'])->name('one-to-one-status');
 });
 
